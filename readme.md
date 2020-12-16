@@ -5,7 +5,7 @@ Objectif
 * easily retrieve the data and save it to mongoDB
 * easily analyze data with R scripts and access the result
 * Do all of this in prebuild Servlets
-* or do all of this in a desktop application
+* ... Or do all of this in a desktop application
 
 Usage
 =====
