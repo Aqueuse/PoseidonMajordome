@@ -2,13 +2,12 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 description = 'An humble library to work quickly with data from APIs, execute R scripts and store the results in MongoDB with ease'
-mainClassName = 'PoseidonMajordome.Main'
+mainClassName = 'PoseidonMajordome.mainWindow'
 
 repositories {
     jcenter()
 }
 
 dependencies {
-    compile 'org.mongodb:mongodb-driver-sync:4.1.1'
     implementation fileTree('externalDependencies')
 }

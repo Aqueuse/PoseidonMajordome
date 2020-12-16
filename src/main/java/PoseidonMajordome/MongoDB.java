@@ -1,34 +1,21 @@
 package PoseidonMajordome;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.ConnectionString;
-import com.mongodb.ServerAddress;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
-import java.util.Arrays;
-
-/**
- *
- * @author Laura Becognee aka Aqueuse
- */
-// connect, read, write and search in local mongoDB server
 public class MongoDB {
     public static void connectDbNoAuthentication() {
-        MongoClient mongoClient = MongoClients.create();
+        MongoClient mongoClient = new MongoClient();
     }
-
-    public static void connectDbWithCredentials(String user, String source, String password) {
+ 
+    public static void connectDbWithCredentials(String ServerName, int address, String user, String source, String password) {
         char[] passwordCharArray = password.toCharArray(); // the password as a character array
-
+        
         MongoCredential credential = MongoCredential.createCredential(user, source, passwordCharArray);
-
-        MongoClient mongoClient = MongoClients.create(
-                MongoClientSettings.builder()
-                        .applyToClusterSettings(builder
-                                -> builder.hosts(Arrays.asList(new ServerAddress("host1", 27017))))
-                        .credential(credential)
-                        .build());
+        MongoClientOptions options = MongoClientOptions.builder().build();
+        
+        MongoClient mongoClient = new MongoClient( new ServerAddress(ServerName, address), credential, options);
     }
 }

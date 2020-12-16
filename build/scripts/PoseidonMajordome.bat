@@ -67,11 +67,11 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\PoseidonMajordome-0.1.jar;%APP_HOME%\lib\jackson-annotations-2.12.0.jar;%APP_HOME%\lib\jackson-core-2.12.0.jar;%APP_HOME%\lib\jackson-databind-2.12.0.jar;%APP_HOME%\lib\javax.servlet-api-4.0.1.jar;%APP_HOME%\lib\kotlin-stdlib-1.4.20-M1.jar;%APP_HOME%\lib\mongodb-driver-sync-4.1.1.jar;%APP_HOME%\lib\okhttp-4.9.0.jar;%APP_HOME%\lib\okio-2.9.0.jar;%APP_HOME%\lib\slf4j-api-1.7.9.jar;%APP_HOME%\lib\slf4j-simple-1.7.9.jar;%APP_HOME%\lib\mongodb-driver-sync-4.1.1.jar;%APP_HOME%\lib\mongodb-driver-core-4.1.1.jar;%APP_HOME%\lib\bson-4.1.1.jar
+set CLASSPATH=%APP_HOME%\lib\PoseidonMajordome-0.1.jar;%APP_HOME%\lib\jackson-annotations-2.12.0.jar;%APP_HOME%\lib\jackson-core-2.12.0.jar;%APP_HOME%\lib\jackson-databind-2.12.0.jar;%APP_HOME%\lib\javax.servlet-api-4.0.1.jar;%APP_HOME%\lib\kotlin-stdlib-1.4.20-M1.jar;%APP_HOME%\lib\mongo-java-driver-3.12.7.jar;%APP_HOME%\lib\okhttp-4.9.0.jar;%APP_HOME%\lib\okio-2.9.0.jar;%APP_HOME%\lib\slf4j-api-1.7.9.jar;%APP_HOME%\lib\slf4j-simple-1.7.9.jar
 
 
 @rem Execute PoseidonMajordome
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %POSEIDON_MAJORDOME_OPTS%  -classpath "%CLASSPATH%" PoseidonMajordome.Main %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %POSEIDON_MAJORDOME_OPTS%  -classpath "%CLASSPATH%" PoseidonMajordome.mainWindow %*
 
 :end
 @rem End local scope for the variables with windows NT shell

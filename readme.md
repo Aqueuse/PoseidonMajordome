@@ -22,19 +22,19 @@ Usage
 web application
 ---------------
 + create a servlet
-+ connect to an API
++ connect to one or more API
 + retrieve the result
 + analyse it
 + save it and/or the analyse result
-in a mongoDB database
+locally or in a mongoDB database
 + serve it to the user with HTML
 
 Desktop application
 -------------------
-+ create a project in the main application
-+ connect to an API
++ create a simple swing interface
++ connect to one or more API
 + retrieve the result
 + analyse it
-+ save it and/or the analyse result
-in a mongoDB database
-+ serve it to the user in the app or with HTML/PDF export
++ save it and/or save the analyse's results
+locally or in a mongoDB database
++ serve it to the user in the app and/or with HTML/JSON/CSV/IMG/PDF export
