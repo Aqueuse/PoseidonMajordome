@@ -7,6 +7,8 @@ Objectif
 * Do all of this in prebuild Servlets
 * ... Or do all of this in a desktop application
 
+* ... And retrieve the generated sourcecode to do whatever you want with ! <3
+
 Usage
 =====
 
