@@ -41,8 +41,8 @@ Internal dependencies (includes in the final app)
   - Jackson annotation/Jackon core/Jackson databind
   - javax servlet api
   
-  External dependencies (need to be installed beside Poseidon)
-  ------------------------------------------------------------
-  - MongoDB Community Server (https://www.mongodb.com/try/download/community)
-  - Java Virtual Machine (https://www.java.com/en/download/)
- 
+External dependencies (need to be installed beside Poseidon)
+------------------------------------------------------------
+ - Java Virtual Machine (https://www.java.com/en/download/)
+ - MongoDB Community Server (https://www.mongodb.com/try/download/community) (**needed if you want to save your data in**)
+  
