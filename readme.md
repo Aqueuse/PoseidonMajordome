@@ -45,5 +45,6 @@ Internal dependencies (includes in the final app)
 External dependencies (need to be installed beside Poseidon)
 ------------------------------------------------------------
  - Java Virtual Machine (https://www.java.com/en/download/)
+ - R language (https://cran.r-project.org/mirrors.html)
  - MongoDB Community Server (https://www.mongodb.com/try/download/community) (**needed if you want to save your data in**)
   
