@@ -1,4 +1,6 @@
-PoseidonMajordome/MongoDB.java
- PoseidonMajordome.MongoDB
 PoseidonMajordome/mainWindow.java
  PoseidonMajordome.mainWindow
+PoseidonMajordome/Exec.java
+ PoseidonMajordome.Exec
+PoseidonMajordome/Project.java
+ PoseidonMajordome.Project

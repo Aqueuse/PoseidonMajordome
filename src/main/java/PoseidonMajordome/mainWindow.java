@@ -59,66 +59,37 @@ public class mainWindow extends JPanel {
 
             menuFile.addSeparator();
 
-            JMenuItem menuExport = new JMenuItem( "export" );
-            menuFile.add(menuExport);
-
-            menuFile.addSeparator();
-
             JMenuItem menuExit = new JMenuItem( "Exit" );
             menuExit.setMnemonic( 'x' );
             menuExit.setAccelerator( KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_DOWN_MASK) );
             menuFile.add(menuExit);
 
             menuBar.add(menuFile);
-            
-        ///     [edit] : undo / reddo / cut / copy / paste
-        JMenu menuEdit = new JMenu( "Edit" );
-        menuEdit.setMnemonic( 'E' );
-        
-            JMenuItem menuUndo = new JMenuItem( "Undo" );
-            menuUndo.setIcon( new ImageIcon( "icons/undo.png" ) );
-            menuUndo.setMnemonic( 'U' );
-            menuUndo.setAccelerator( KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK) );
-            menuEdit.add(menuUndo);
-        
-            JMenuItem menuRedo = new JMenuItem( "Redo" );
-            menuRedo.setIcon( new ImageIcon( "icons/redo.png" ) );
-            menuRedo.setMnemonic( 'R' );
-            menuRedo.setAccelerator( KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_DOWN_MASK) );
-            menuEdit.add(menuRedo);
-        
-            menuEdit.addSeparator();
-        
-            JMenuItem menuCopy = new JMenuItem( "Copy" );
-            menuCopy.setIcon( new ImageIcon( "icons/copy.png" ) );
-            menuCopy.setMnemonic( 'C' );
-            menuCopy.setAccelerator( KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK) );
-            menuEdit.add(menuCopy);
-        
-            JMenuItem menuCut = new JMenuItem( "Cut" );
-            menuCut.setIcon( new ImageIcon( "icons/cut.png" ) );
-            menuCut.setMnemonic( 't' );
-            menuCut.setAccelerator( KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK) );
-            menuEdit.add(menuCut);
-        
-            JMenuItem menuPaste = new JMenuItem( "Paste" );
-            menuPaste.setIcon( new ImageIcon( "icons/paste.png" ) );
-            menuPaste.setMnemonic( 'P' );
-            menuPaste.setAccelerator( KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK) );
-            menuEdit.add(menuPaste);
-
-            menuBar.add(menuEdit);
-            
+           
         ///     [add] :  mongoDB attachement / output folder / Rscript / external dependencies
         JMenu menuAdd = new JMenu("Add");
         menuAdd.setMnemonic('A');
-        
-             /// [add] :  mongoDB attachement / output folder / Rscript / external dependencies
-            JMenuItem menuMongo = new JMenuItem( "MongoDB attachement" );
+
+             /// [add] :  Rscript / Servlet / mongoDB attachement / output folder / external dependencies
+            JMenuItem menuRscript = new JMenuItem( "new Rscript interaction template" );
+            menuAdd.add(menuRscript);
+
+            JMenuItem menuServlet = new JMenuItem( "new servlet template" );
+            menuAdd.add(menuServlet);
+
+            JMenuItem menuMongo = new JMenuItem( "MongoDB attachement template" );
             menuAdd.add(menuMongo);
-            
-            JMenuItem menuFolder = new JMenuItem( "Output Folder" );
-            menuAdd.add(menuFolder);
+
+            menuAdd.addSeparator();
+
+            JMenuItem menuDistantAPI = new JMenuItem( "connection to a distant API" );
+            menuAdd.add(menuDistantAPI);
+
+            JMenuItem menuFolderIn = new JMenuItem( "Input Folder" );
+            menuAdd.add(menuFolderIn);
+
+            JMenuItem menuFolderOut = new JMenuItem( "Output Folder" );
+            menuAdd.add(menuFolderOut);
 
             JMenuItem menuDependencies = new JMenuItem( "External dependencies" );
             menuAdd.add(menuDependencies);
@@ -128,20 +99,12 @@ public class mainWindow extends JPanel {
         ///     [project] : servlet template / HTML output template / project template / test locally
         JMenu menuProject = new JMenu( "Project" );
         menuProject.setMnemonic( 'P' );
-        
-                    JMenuItem menuProjectTemplate = new JMenuItem( "new project template" );
-                    menuProject.add(menuProjectTemplate);
 
-                    JMenuItem menuServlet = new JMenuItem( "new servlet template" );
-                    menuProject.add(menuServlet);
+            JMenuItem menuTest = new JMenuItem( "test locally" );
+            menuProject.add(menuTest);
 
-                    JMenuItem menuHTML = new JMenuItem( "new HTML output template" );
-                    menuProject.add(menuHTML);
-
-                    menuProject.addSeparator();
-
-                    JMenuItem menuTest = new JMenuItem( "test locally" );
-                    menuProject.add(menuTest);
+            JMenuItem menuBundle = new JMenuItem( "create application bundle" );
+            menuProject.add(menuBundle);
 
         menuBar.add( menuProject );
         
@@ -158,7 +121,7 @@ public class mainWindow extends JPanel {
     }
 
     public void menuNewListener( ActionEvent event ) {
-        JOptionPane.showMessageDialog( f, "Button clicked !" );
+        JOptionPane.showMessageDialog( f, "créer un nouveau projet" );
     }
     
     public static void main(String[] Args) {

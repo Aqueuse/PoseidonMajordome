@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-description = 'An humble library to work quickly with data from APIs, execute R scripts and store the results in MongoDB with ease'
+description = 'Accelerateur de DataScience'
 mainClassName = 'PoseidonMajordome.mainWindow'
 
 repositories {
@@ -9,5 +9,33 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree('externalDependencies')
+    implementation fileTree('externalDependencies/')
+}
+
+jar {
+    archiveClassifier = 'uber'
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+
+    // copy the jar dependencies into the FatJar (aka uberJar)
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+
+    // copy the manifest with the correct main class
+    manifest {
+        attributes("Implementation-Title": "Gradle",
+                   "Implementation-Version": archiveVersion,
+                   "Main-Class": "wordcloud")
+    }
+
+    // copy the externalDependencies folder in the fatJar
+    into 'externalDependencies', {
+        from 'externalDependencies'
+    }
+
+    // copy the Sample folder in the fatJar
+    into 'Samples', {
+        from 'Samples'
+    }
 }
