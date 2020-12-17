@@ -8,8 +8,8 @@ Objectif
 * save to mongoDB (if you want)
 * or export it to HTML/JSON/CSV/IMG/PDF
 
-* Do all of this in prebuild Servlets
-* ... Or do all of this in a desktop application
++ Do all of this in prebuild Servlets
++ ... Or do all of this in a desktop application
 
 * ... And retrieve the generated sourcecode to do whatever you want with ! <3
 
