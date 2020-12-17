@@ -1,17 +1,14 @@
 Objectif
 ========
 
-* create a swing project interface
-* create a servlet (if you want)
+* create a Desktop project interface with Swing
+* ... or create a Web Application with a servlet
 * easily connect with any API (with or without authentication)
 * easily analyze the data with R scripts and access the result
-* save to mongoDB (if you want)
-* or export it to HTML/JSON/CSV/IMG/PDF
+* save to mongoDB
+* ... or export it to HTML/JSON/CSV/IMG/PDF
 
-+ Do all of this in prebuild Servlets
-+ ... Or do all of this in a desktop application
-
-* ... And retrieve the generated sourcecode to do whatever you want with ! <3
++ And retrieve the generated sourcecode to do whatever you want with ! <3
 
 Download
 ========
