@@ -9,22 +9,17 @@ Objectif
 
 * ... And retrieve the generated sourcecode to do whatever you want with ! <3
 
+Download
+========
+a Java library
+a Shell application
+a Desktop application
+or use the web application
+
 Usage
 =====
-
-web application
----------------
-+ create a servlet
-+ connect to one or more API
-+ retrieve the result
-+ analyse it with R
-+ save it and/or the analyse's results
-locally or in a mongoDB database
-+ serve it to the user with HTML/JSON/CSV export
-
-Desktop application
--------------------
 + create a project interface
++ create a servlet (if you want)
 + connect to one or more API
 + retrieve the result
 + analyse it with R
@@ -32,8 +27,8 @@ Desktop application
 locally or in a mongoDB database
 + serve it to the user in the app and/or with HTML/JSON/CSV/IMG/PDF export
 
-Dependencies :
-==============
+Dependencies
+============
 Internal dependencies (includes in the final app)
 -------------------------------------------------
   - mongo-driver-sync/SL4J/SL4J-Simple
