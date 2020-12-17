@@ -40,7 +40,8 @@ Internal dependencies (includes in the final app)
   - okhttp/okio/kotlin
   - Jackson annotation/Jackon core/Jackson databind
   - javax servlet api
-  
+  - Apache Tomcat embedded
+
 External dependencies (need to be installed beside Poseidon)
 ------------------------------------------------------------
  - Java Virtual Machine (https://www.java.com/en/download/)
