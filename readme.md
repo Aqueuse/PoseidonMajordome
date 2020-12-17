@@ -1,9 +1,13 @@
 Objectif
 ========
 
+* create a swing project interface
+* create a servlet (if you want)
 * easily connect with any API (with or without authentication)
-* easily retrieve the data and save it to mongoDB
-* easily analyze data with R scripts and access the result
+* easily analyze the data with R scripts and access the result
+* save to mongoDB (if you want)
+* or export it to HTML/JSON/CSV/IMG/PDF
+
 * Do all of this in prebuild Servlets
 * ... Or do all of this in a desktop application
 
@@ -15,17 +19,6 @@ Download
 + a Shell application
 + a Desktop application
 + ... or use the web generator
-
-Usage
-=====
-+ create a project interface
-+ create a servlet (if you want)
-+ connect to one or more API
-+ retrieve the result
-+ analyse it with R
-+ save it and/or save the analyse's results
-locally or in a mongoDB database
-+ serve it to the user in the app and/or with HTML/JSON/CSV/IMG/PDF export
 
 Dependencies
 ============
@@ -42,4 +35,3 @@ External dependencies (need to be installed beside Poseidon)
  - Java Virtual Machine (https://www.java.com/en/download/)
  - R language (https://cran.r-project.org/mirrors.html)
  - MongoDB Community Server (https://www.mongodb.com/try/download/community) (**needed if you want to save your data in**)
-  
