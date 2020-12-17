@@ -14,6 +14,7 @@ Download
 + a Java library
 + a Shell application
 + a Desktop application
++ ... or use the web generator
 
 Usage
 =====
