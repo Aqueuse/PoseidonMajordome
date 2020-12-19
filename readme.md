@@ -1,36 +1,15 @@
-Objectif
-========
+A generator to speed up DataScience and API Java development
+=============================================================
 
-* easily connect with any API (with or without authentication)
-* easily retrieve the data and save it to mongoDB
-* easily analyze data with R scripts and access the result
+Generate Java Source Template to :
+-------------------------------
+* quickly connect with any API (with or without authentication)
+* quickly retrieve the data and save it to mongoDB
+* quickly analyze data with R scripts and access the result
 * Do all of this in prebuild Servlets
-* ... Or do all of this in a desktop application
+* ... Or do all of this in a generated desktop application
 
 * ... And retrieve the generated sourcecode to do whatever you want with ! <3
-
-Usage
-=====
-
-web application
----------------
-+ create a servlet
-+ connect to one or more API
-+ retrieve the result
-+ analyse it with R
-+ save it and/or the analyse's results
-locally or in a mongoDB database
-+ serve it to the user with HTML/JSON/CSV export
-
-Desktop application
--------------------
-+ create a project interface
-+ connect to one or more API
-+ retrieve the result
-+ analyse it with R
-+ save it and/or save the analyse's results
-locally or in a mongoDB database
-+ serve it to the user in the app and/or with HTML/JSON/CSV/IMG/PDF export
 
 Dependencies :
 ==============
@@ -45,4 +24,3 @@ External dependencies (need to be installed beside Poseidon)
 ------------------------------------------------------------
  - Java Virtual Machine (https://www.java.com/en/download/)
  - MongoDB Community Server (https://www.mongodb.com/try/download/community) (**needed if you want to save your data in**)
-  
