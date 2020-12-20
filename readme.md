@@ -16,9 +16,8 @@ Dependencies :
 Internal dependencies (includes in the final app)
 -------------------------------------------------
   - mongo-driver-sync/SL4J/SL4J-Simple
-  - okhttp/okio/kotlin
-  - Jackson annotation/Jackon core/Jackson databind
   - javax servlet api
+  - javax json Simple/API
   
 External dependencies (need to be installed beside Poseidon)
 ------------------------------------------------------------
