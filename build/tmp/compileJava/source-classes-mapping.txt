@@ -2,5 +2,7 @@ PoseidonMajordome/Project.java
  PoseidonMajordome.Project
 PoseidonMajordome/Exec.java
  PoseidonMajordome.Exec
+PoseidonMajordome/WelcomeCard.java
+ PoseidonMajordome.WelcomeCard
 PoseidonMajordome/generator.java
  PoseidonMajordome.generator

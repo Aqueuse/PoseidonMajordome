@@ -10,6 +10,8 @@ public class generator extends JFrame {
     static CardLayout stepsLayout = new CardLayout();
     static JPanel cardPanel = new JPanel();
 
+    static WelcomeCard WelcomePanel = new WelcomeCard();
+
     static GridBagConstraints gbcLast = new GridBagConstraints();
     static GridBagConstraints gbcNext = new GridBagConstraints();
     static GridBagConstraints gbcCancel = new GridBagConstraints();
@@ -22,8 +24,10 @@ public class generator extends JFrame {
 
     public static void windowSettings() {
         globalPanel.setLayout(global);
+
         cardPanel.setLayout(stepsLayout);
         cardPanel.setPreferredSize(new Dimension(600,550));
+        cardPanel.add(WelcomePanel);
 
         buttonsPanel.setLayout(buttonsLayout);
         buttonsPanel.setPreferredSize(new Dimension(600,50));
