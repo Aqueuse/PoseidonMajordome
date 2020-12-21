@@ -4,49 +4,50 @@ import javax.swing.*;
 import java.awt.*;
 
 public class generator extends JFrame {
-    static GridLayout global = new GridLayout(2,1);
     static JPanel globalPanel = new JPanel();
+    static BoxLayout global = new BoxLayout(globalPanel, BoxLayout.Y_AXIS);
 
-    static CardLayout steps = new CardLayout();
+    static CardLayout stepsLayout = new CardLayout();
     static JPanel cardPanel = new JPanel();
 
-    static GridBagLayout buttonsLayout = new GridBagLayout();
     static GridBagConstraints gbcLast = new GridBagConstraints();
     static GridBagConstraints gbcNext = new GridBagConstraints();
     static GridBagConstraints gbcCancel = new GridBagConstraints();
 
     static JPanel buttonsPanel = new JPanel();
+    static BoxLayout buttonsLayout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
     static JButton last = new JButton("last");
     static JButton next = new JButton("next");
     static JButton cancel = new JButton("cancel");
 
     public static void windowSettings() {
-        gbcLast.weighty = 2;
-        gbcLast.anchor = GridBagConstraints.LAST_LINE_START;
-
-        gbcNext.weighty = 2;
-        gbcNext.anchor = GridBagConstraints.PAGE_END;
-
-        gbcCancel.weighty = 2;
-        gbcCancel.anchor = GridBagConstraints.LAST_LINE_END;
-
         globalPanel.setLayout(global);
-        cardPanel.setLayout(steps);
+        cardPanel.setLayout(stepsLayout);
+        cardPanel.setPreferredSize(new Dimension(600,550));
 
         buttonsPanel.setLayout(buttonsLayout);
+        buttonsPanel.setPreferredSize(new Dimension(600,50));
+        buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
         buttonsPanel.add(last, gbcLast);
+        buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
         buttonsPanel.add(next, gbcNext);
+        buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
         buttonsPanel.add(cancel, gbcCancel);
 
         globalPanel.add(cardPanel);
+        globalPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         globalPanel.add(buttonsPanel);
     }
 
-    public static void main (String[] Args) {
+    public static void main (String[] Args) throws ClassNotFoundException, UnsupportedLookAndFeelException,
+                                                   InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+
         generator newProject = new generator();
-        newProject.add(globalPanel);
+        newProject.getContentPane().add(globalPanel);
         windowSettings();
-        newProject.setSize(600,600);
+        newProject.setResizable(false);
+        newProject.pack();
         newProject.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         newProject.setLocationRelativeTo(null);
         newProject.setVisible(true);
