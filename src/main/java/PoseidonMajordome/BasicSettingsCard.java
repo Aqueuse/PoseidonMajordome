@@ -19,16 +19,20 @@ public class BasicSettingsCard extends JPanel {
     public JTextPane textArea = new JTextPane();
     public JPanel settingsPanel = new JPanel();
 
+    public JPanel namePanel = new JPanel();
     public JLabel projectNameLb = new JLabel("Project Name : ");
     public JTextField projectNameFd = new JTextField();
 
+    public JPanel descriptionPanel = new JPanel();
     public JLabel projectDescriptionLb = new JLabel("Description :   ");
     public JTextPane projectDescriptionPn = new JTextPane();
 
+    public JPanel pathPanel = new JPanel();
     public JLabel projectPathLb = new JLabel("Location : ");
-    public JTextField projectPathFd = new JTextField();
+    public JTextField projectPathFd = new JTextField(" ");
     public JButton openNavigator = new JButton("...");
 
+    public JPanel typePanel = new JPanel();
     public JTextPane desktopPn = new JTextPane();
     public JTextPane webPn = new JTextPane();
     public ButtonGroup projectType = new ButtonGroup();
@@ -59,7 +63,6 @@ public class BasicSettingsCard extends JPanel {
         settingsPanel.add(Box.createRigidArea(new Dimension(80,60)));
 
         projectNameFd.setPreferredSize(new Dimension(220,30));
-        JPanel namePanel = new JPanel();
         namePanel.setLayout(new FlowLayout());
         namePanel.add(projectNameLb);
         namePanel.add(projectNameFd);
@@ -70,7 +73,7 @@ public class BasicSettingsCard extends JPanel {
         projectDescriptionPn.setPreferredSize(new Dimension(220,200));
         projectDescriptionPn.setBorder(BorderFactory.createEtchedBorder(1, new Color(122,138,153), Color.WHITE));
         projectDescriptionPn.setText("will be saved in readme.md");
-        JPanel descriptionPanel = new JPanel();
+
         descriptionPanel.setLayout(new FlowLayout());
         descriptionPanel.add(projectDescriptionLb);
         descriptionPanel.add(projectDescriptionPn);
@@ -79,7 +82,6 @@ public class BasicSettingsCard extends JPanel {
         settingsPanel.add(Box.createRigidArea(new Dimension(80,20)));
 
         projectPathFd.setPreferredSize(new Dimension(200,30));
-        JPanel pathPanel = new JPanel();
         openNavigator.addActionListener(e -> {
             FileChooser projectFileChooser = new FileChooser();
 
@@ -87,7 +89,6 @@ public class BasicSettingsCard extends JPanel {
                 File fileSelected = projectFileChooser.chooseFolder.getSelectedFile();
 
                 String filepath = fileSelected.getPath();
-                System.out.println(filepath);
                 projectPathFd.setText(filepath);
             }
         });
@@ -110,7 +111,6 @@ public class BasicSettingsCard extends JPanel {
         webPn.setText(webStr);
         webPn.setBackground(new Color(238,238,238));
 
-        JPanel typePanel = new JPanel();
         typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.X_AXIS));
 
         JPanel desktopPanel = new JPanel();

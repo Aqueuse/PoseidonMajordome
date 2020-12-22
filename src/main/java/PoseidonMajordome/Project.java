@@ -1,5 +1,6 @@
 package PoseidonMajordome;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +18,7 @@ public class Project {
 
     public static void createProject(String ProjectName, String ProjectDescription,
                                      String packageName, String ProjectAbsolutePath,
-                                     boolean IsWebApplication) throws IOException {
+                                     boolean IsWebApplication) {
         IsProjectWeb = IsWebApplication;
         ProjectPathStr = ProjectAbsolutePath + "/"+ProjectName+"/";
         PackageName = packageName;
@@ -73,5 +74,15 @@ public class Project {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    public static void initSettingsSave(String projectName, String projectDescr, String projectPathStr, boolean isProjectWeb)
+            throws IOException {
+        FileWriter initWriter = new FileWriter("GUIgenerator/ProjectSettings.ini", false);
+        initWriter.append(projectName+"\n"+
+                          projectDescr+"\n"+
+                          projectPathStr+"\n"+
+                          isProjectWeb);
+        initWriter.close();
     }
 }
