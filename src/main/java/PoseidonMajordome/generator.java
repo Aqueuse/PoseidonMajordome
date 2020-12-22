@@ -2,6 +2,8 @@ package PoseidonMajordome;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class generator extends JFrame {
     static JPanel globalPanel = new JPanel();
@@ -11,6 +13,7 @@ public class generator extends JFrame {
     static JPanel cardPanel = new JPanel();
 
     static WelcomeCard WelcomePanel = new WelcomeCard();
+    static BasicSettingsCard settingsPanel = new BasicSettingsCard();
 
     static GridBagConstraints gbcLast = new GridBagConstraints();
     static GridBagConstraints gbcNext = new GridBagConstraints();
@@ -26,11 +29,16 @@ public class generator extends JFrame {
         globalPanel.setLayout(global);
 
         cardPanel.setLayout(stepsLayout);
-        cardPanel.setPreferredSize(new Dimension(600,550));
+        cardPanel.setPreferredSize(new Dimension(700,550));
         cardPanel.add(WelcomePanel);
+        cardPanel.add(settingsPanel);
+
+        last.addActionListener(e -> stepsLayout.last(cardPanel));
+        next.addActionListener(e -> stepsLayout.next(cardPanel));
+        cancel.addActionListener(e -> System.exit(0));
 
         buttonsPanel.setLayout(buttonsLayout);
-        buttonsPanel.setPreferredSize(new Dimension(600,50));
+        buttonsPanel.setPreferredSize(new Dimension(700,50));
         buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
         buttonsPanel.add(last, gbcLast);
         buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
