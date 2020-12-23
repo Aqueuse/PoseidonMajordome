@@ -2,10 +2,8 @@ package PoseidonMajordome;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class generator extends JFrame {
     static JPanel globalPanel = new JPanel();
@@ -17,6 +15,7 @@ public class generator extends JFrame {
     static WelcomeCard WelcomePanel = new WelcomeCard();
     static BasicSettingsCard settingsPanel = new BasicSettingsCard();
     static SamplesAddingCard samplesAddingPanel = new SamplesAddingCard();
+    static ConfirmCard confirmPanel = new ConfirmCard();
 
     static JPanel buttonsPanel = new JPanel();
     static BoxLayout buttonsLayout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
@@ -24,96 +23,74 @@ public class generator extends JFrame {
     static JButton next = new JButton("next");
     static JButton cancel = new JButton("cancel");
 
-    static int nextHint = 0;
-    static int typeChoose = 0;
-    static int nameChoose = 0;
-    static int descrChoose = 0;
-    static int pathChoose = 0;
-
     public static void windowSettings() {
+        String[] settings = new String[4];
+
         globalPanel.setLayout(global);
 
         cardPanel.setLayout(stepsLayout);
-        cardPanel.setPreferredSize(new Dimension(700,550));
+        cardPanel.setPreferredSize(new Dimension(700, 550));
 
         cardPanel.add(WelcomePanel);
         cardPanel.add(settingsPanel);
         cardPanel.add(samplesAddingPanel);
+        cardPanel.add(confirmPanel);
+
+        WelcomePanel.setName("welcome");
+        settingsPanel.setName("settings");
+        samplesAddingPanel.setName("samples");
+        confirmPanel.setName("confirm");
 
         previous.addActionListener(e -> {
             if (!cardPanel.getComponent(0).isVisible())
                 stepsLayout.previous(cardPanel);
-
-                // on remet les compteurs a zero : the user can choose again is type of project
-                settingsPanel.typePanel.setBorder(BorderFactory.createEmptyBorder());
-                nextHint = 0;
-                typeChoose = 0;
-                nameChoose = 0;
-                descrChoose = 0;
-                pathChoose = 0;
+            next.setText("next");
         });
+
         next.addActionListener(e -> {
-            if (cardPanel.getComponent(0).isVisible()) {
-                stepsLayout.next(cardPanel);
-            }
-            if (cardPanel.getComponent(1).isVisible()) {
-                nextHint = nextHint + 1;
+            stepsLayout.next(cardPanel);
 
-                if (settingsPanel.projectNameFd.getText().length() > 0) nameChoose = 1;
-                if (settingsPanel.projectDescriptionPn.getText().length() > 0) descrChoose = 1;
-                if (settingsPanel.webChoice.isSelected() || settingsPanel.desktopChoice.isSelected()) typeChoose = 1;
+           if (cardPanel.getComponent(2).isVisible()) {  /// Samples page
+               settings[0] = settingsPanel.projectNameFd.getText();
+               settings[1] = settingsPanel.projectDescriptionPn.getText();
+               settings[2] = settingsPanel.projectPathFd.getText();
+               settings[3] = String.valueOf(settingsPanel.webChoice.isSelected());
 
-                try {
-                    if (Files.exists(Paths.get(settingsPanel.projectPathFd.getText()))) pathChoose = 1;
-                }
-                catch (InvalidPathException IPE) {
-                    System.out.println("folder not found");
-                }
+               next.setText("finish");
+           }
 
-                System.out.println(
-                        "nextHint = "+nextHint+
-                                "typeChoose = "+typeChoose+
-                                "nameChoose = "+nameChoose+
-                                "descrChoose = "+descrChoose+
-                                "pathChoose = "+pathChoose
-                );
+           if (cardPanel.getComponent(3).isVisible()) { /// confirm page
+               // on ajoute les labels des checkBox validée dans la liste samples
+               List<String> samples = new ArrayList<>();
 
-                if (nameChoose + descrChoose + pathChoose + typeChoose < 4 && nextHint>=1) {
-                    if (nameChoose==0) settingsPanel.namePanel.setBorder(BorderFactory.createEtchedBorder());
-                    if (descrChoose==0) settingsPanel.projectDescriptionPn.setBorder(BorderFactory.createEtchedBorder());
-                    if (pathChoose==0) settingsPanel.pathPanel.setBorder(BorderFactory.createEtchedBorder());
-                    if (typeChoose==0) settingsPanel.typePanel.setBorder(BorderFactory.createEtchedBorder());
-                }
+               for (int c = 0; c < samplesAddingPanel.checkboxes.size(); c++) {
+                   if (samplesAddingPanel.checkboxes.get(c).getState()) {
+                       samples.add(samplesAddingPanel.checkboxes.get(c).getLabel());
+                   }
+               }
 
-                if (nameChoose + descrChoose + pathChoose + typeChoose == 4) {
-                    try {
-                        Project.initSettingsSave(settingsPanel.projectNameFd.getText(),
-                                settingsPanel.projectDescriptionPn.getText(),
-                                settingsPanel.projectPathFd.getText(),
-                                settingsPanel.webChoice.isSelected()
-                        );
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                    settingsPanel.namePanel.setBorder(BorderFactory.createEmptyBorder());
-                    settingsPanel.descriptionPanel.setBorder(BorderFactory.createEmptyBorder());
-                    settingsPanel.pathPanel.setBorder(BorderFactory.createEmptyBorder());
-                    settingsPanel.typePanel.setBorder(BorderFactory.createEmptyBorder());
-                    stepsLayout.next(cardPanel);
-                }
-            }
+               String confirmStr = "";
+               for (int s = 0; s < settings.length; s++)
+                   confirmStr = confirmStr.concat(settings[s] + "\n");
+               for (int sa = 0; sa < samples.size(); sa++)
+                   confirmStr = confirmStr.concat(samples.get(sa) + "\n");
+
+               System.out.println(confirmStr);
+               confirmPanel.settingsText.setText(confirmStr);
+               confirmPanel.settingsText.revalidate();
+           }
         });
         cancel.addActionListener(e -> {
             System.exit(0);
         });
 
         buttonsPanel.setLayout(buttonsLayout);
-        buttonsPanel.setPreferredSize(new Dimension(700,50));
-        buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
+        buttonsPanel.setPreferredSize(new Dimension(700, 50));
+        buttonsPanel.add(Box.createRigidArea(new Dimension(135, 5)));
         buttonsPanel.add(previous);
-        buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
+        buttonsPanel.add(Box.createRigidArea(new Dimension(135, 5)));
         buttonsPanel.add(next);
-        buttonsPanel.add(Box.createRigidArea(new Dimension(135,5)));
+        buttonsPanel.add(Box.createRigidArea(new Dimension(135, 5)));
         buttonsPanel.add(cancel);
 
         globalPanel.add(cardPanel);
@@ -121,8 +98,8 @@ public class generator extends JFrame {
         globalPanel.add(buttonsPanel);
     }
 
-    public static void main (String[] Args) throws ClassNotFoundException, UnsupportedLookAndFeelException,
-                                                   InstantiationException, IllegalAccessException {
+    public static void main(String[] Args) throws ClassNotFoundException, UnsupportedLookAndFeelException,
+            InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
         generator newProject = new generator();

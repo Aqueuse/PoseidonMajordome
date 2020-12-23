@@ -1,11 +1,11 @@
 package PoseidonMajordome;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import static java.nio.file.StandardCopyOption.*;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 // copy base project sample (with gradle embedded) in the location
 // folder name = project name
@@ -42,11 +42,11 @@ public class Project {
         }
     }
 
-    public void addSample(String SampleName, String chosenName) {
+    public void addSample(String SampleName) {
         try {
             Files.copy(Paths.get("Samples/" + SampleName),
                     Paths.get(ProjectPathStr + "app/main/java/" +
-                            PackageName + "/" + chosenName + ".java"),
+                            PackageName + "/" + SampleName + ".java"),
                     REPLACE_EXISTING);
         } catch (IOException io) {
             System.out.println(io + "in PoseidonMajordome.addRscript.create()");
@@ -74,15 +74,5 @@ public class Project {
                         e.printStackTrace();
                     }
                 });
-    }
-
-    public static void initSettingsSave(String projectName, String projectDescr, String projectPathStr, boolean isProjectWeb)
-            throws IOException {
-        FileWriter initWriter = new FileWriter("GUIgenerator/ProjectSettings.ini", false);
-        initWriter.append(projectName+"\n"+
-                          projectDescr+"\n"+
-                          projectPathStr+"\n"+
-                          isProjectWeb);
-        initWriter.close();
     }
 }

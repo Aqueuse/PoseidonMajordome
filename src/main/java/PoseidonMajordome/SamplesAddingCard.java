@@ -10,7 +10,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class SamplesAddingCard extends JPanel {
@@ -20,9 +22,14 @@ public class SamplesAddingCard extends JPanel {
             "default package project\n"+
             "from Samples/";
 
+    public Object[] listArray;
+
     public JTextPane textArea = new JTextPane();
-    public JPanel OthersettingsPanel = new JPanel();
-    public JList<Object> samplesChoose = new JList<>();
+    public JPanel othersettingsPanel = new JPanel();
+    public JPanel BorderListPanel = new JPanel();
+    public JPanel BoxListPanel = new JPanel();
+
+    public List<Checkbox> checkboxes = new ArrayList<>();
 
     public SamplesAddingCard() {
         BoxLayout MessageLayout = new BoxLayout(this, BoxLayout.X_AXIS);
@@ -39,8 +46,13 @@ public class SamplesAddingCard extends JPanel {
         textArea.setBackground(new Color(238,238,238));
         textArea.setPreferredSize(new Dimension(300,550));
 
-        OthersettingsPanel.setPreferredSize(new Dimension(300,550));
-        OthersettingsPanel.setBackground(new Color(238,238,238));
+        othersettingsPanel.setPreferredSize(new Dimension(350,550));
+        othersettingsPanel.setBackground(new Color(238,238,238));
+
+        BorderListPanel.setLayout(new BorderLayout());
+        BoxListPanel.setLayout(new BoxLayout(BoxListPanel, BoxLayout.Y_AXIS));
+
+        BorderListPanel.setPreferredSize(new Dimension(340,550));
 
         // populate JList samplesChoose with the Samples/*.java samples files
         Set<String> SamplesList = new HashSet<>();
@@ -55,11 +67,19 @@ public class SamplesAddingCard extends JPanel {
             ioException.printStackTrace();
         }
 
-        samplesChoose.setListData(SamplesList.toArray());
+        listArray = SamplesList.toArray();
 
-        OthersettingsPanel.add(samplesChoose);
+        for (int i = 0; i < listArray.length; i++) {
+            Checkbox checkbox = new Checkbox(listArray[i].toString());
+            checkboxes.add(checkbox);
+            BoxListPanel.add(checkbox);
+        }
+
+        BorderListPanel.add(BoxListPanel, BorderLayout.WEST);
+        othersettingsPanel.add(BorderListPanel);
+
         this.add(textArea);
         this.add(new JSeparator(SwingConstants.VERTICAL));
-        this.add(OthersettingsPanel);
+        this.add(othersettingsPanel);
     }
 }
