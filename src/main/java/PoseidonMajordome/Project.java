@@ -17,15 +17,16 @@ public class Project {
     public static String PackageName;
 
     public static void createProject(String ProjectName, String ProjectDescription,
-                                     String packageName, String ProjectAbsolutePath,
+                                     String ProjectAbsolutePath,
                                      boolean IsWebApplication) {
         IsProjectWeb = IsWebApplication;
         ProjectPathStr = ProjectAbsolutePath + "/"+ProjectName+"/";
-        PackageName = packageName;
+        PackageName = ProjectName;
         ProjectDescr = ProjectDescription;
 
         try {
-        copyDirectory("Samples/BaseProject", ProjectPathStr);
+            copyDirectory("Samples/BaseProject", ProjectPathStr);
+
             // rename the package (app/src/main/java/MyPackages/ to the chosen name)
             Files.move(Paths.get(ProjectPathStr+"app/src/main/Java/MyPackages"),
                        Paths.get(ProjectPathStr+"app/src/main/java/"+PackageName),

@@ -10,8 +10,7 @@ import java.io.File;
 
 public class BasicSettingsCard extends JPanel {
     String basicSettingsMessage = "\n\n\n\n\n\nChoose you project's settings\n\n"
-            +" They will be saved in GUIgenerator/ProjectSettings.ini\n in the PoseidonMajordome "+
-            "installation folder\n\n You can change your mind until the confirmation step if you need";
+            +"You can change your mind until the confirmation step if you need";
 
     String desktopStr = "  Desktop Project\n (Swing Template\n     embedded)";
     String webStr = "         Web Project\n (Tomcat embedded)";
@@ -113,6 +112,7 @@ public class BasicSettingsCard extends JPanel {
 
         typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.X_AXIS));
 
+        desktopChoice.setSelected(true);
         JPanel desktopPanel = new JPanel();
         desktopPanel.setLayout(new BoxLayout(desktopPanel, BoxLayout.Y_AXIS));
         desktopPanel.setBorder(new EmptyBorder(new Insets(0,20,0,30)));

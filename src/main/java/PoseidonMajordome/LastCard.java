@@ -6,16 +6,12 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
-public class ConfirmCard extends JPanel {
-    String welcomeMessage =
-            "\n\n\n\n\nValidate your parameters by clicking finish\n" +
-            "This will create the project\n"+
-            "and all his files";
+public class LastCard extends JPanel {
+    String welcomeMessage = "\n\n\n\nProject created, good job !\n";
 
     public JTextPane textArea = new JTextPane();
-    public JPanel confirmArea = new JPanel();
 
-    public ConfirmCard() {
+    public LastCard() {
         BoxLayout confirmLayout = new BoxLayout(this, BoxLayout.X_AXIS);
         this.setLayout(confirmLayout);
 
@@ -30,13 +26,6 @@ public class ConfirmCard extends JPanel {
         textArea.setBackground(new Color(238,238,238));
         textArea.setPreferredSize(new Dimension(300,550));
 
-        confirmArea.setPreferredSize(new Dimension(300,550));
-        confirmArea.setBackground(new Color(238,238,238));
-
-        confirmArea.setLayout(new BoxLayout(confirmArea, BoxLayout.Y_AXIS));
-
         this.add(textArea);
-        this.add(new JSeparator(SwingConstants.VERTICAL));
-        this.add(confirmArea);
     }
 }

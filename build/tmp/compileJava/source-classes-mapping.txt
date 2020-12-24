@@ -4,13 +4,15 @@ PoseidonMajordome/WelcomeCard.java
  PoseidonMajordome.WelcomeCard
 PoseidonMajordome/Exec.java
  PoseidonMajordome.Exec
-PoseidonMajordome/BasicSettingsCard.java
- PoseidonMajordome.BasicSettingsCard
 PoseidonMajordome/SamplesAddingCard.java
  PoseidonMajordome.SamplesAddingCard
-PoseidonMajordome/Project.java
- PoseidonMajordome.Project
+PoseidonMajordome/BasicSettingsCard.java
+ PoseidonMajordome.BasicSettingsCard
 PoseidonMajordome/ConfirmCard.java
  PoseidonMajordome.ConfirmCard
+PoseidonMajordome/Project.java
+ PoseidonMajordome.Project
 PoseidonMajordome/generator.java
  PoseidonMajordome.generator
+PoseidonMajordome/LastCard.java
+ PoseidonMajordome.LastCard

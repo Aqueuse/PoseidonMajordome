@@ -3,6 +3,7 @@ package PoseidonMajordome;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class generator extends JFrame {
@@ -16,6 +17,7 @@ public class generator extends JFrame {
     static BasicSettingsCard settingsPanel = new BasicSettingsCard();
     static SamplesAddingCard samplesAddingPanel = new SamplesAddingCard();
     static ConfirmCard confirmPanel = new ConfirmCard();
+    static LastCard lastPanel = new LastCard();
 
     static JPanel buttonsPanel = new JPanel();
     static BoxLayout buttonsLayout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
@@ -24,7 +26,7 @@ public class generator extends JFrame {
     static JButton cancel = new JButton("cancel");
 
     public static void windowSettings() {
-        String[] settings = new String[4];
+        String[] settings = new String[5];
 
         globalPanel.setLayout(global);
 
@@ -35,50 +37,75 @@ public class generator extends JFrame {
         cardPanel.add(settingsPanel);
         cardPanel.add(samplesAddingPanel);
         cardPanel.add(confirmPanel);
-
-        WelcomePanel.setName("welcome");
-        settingsPanel.setName("settings");
-        samplesAddingPanel.setName("samples");
-        confirmPanel.setName("confirm");
+        cardPanel.add(lastPanel);
 
         previous.addActionListener(e -> {
+            next.setText("next");
             if (!cardPanel.getComponent(0).isVisible())
                 stepsLayout.previous(cardPanel);
-            next.setText("next");
         });
 
         next.addActionListener(e -> {
             stepsLayout.next(cardPanel);
 
-           if (cardPanel.getComponent(2).isVisible()) {  /// Samples page
-               settings[0] = settingsPanel.projectNameFd.getText();
-               settings[1] = settingsPanel.projectDescriptionPn.getText();
-               settings[2] = settingsPanel.projectPathFd.getText();
-               settings[3] = String.valueOf(settingsPanel.webChoice.isSelected());
+            if (cardPanel.getComponent(2).isVisible()) {  /// basic settings page
+                settings[0] = "Project name : empty, click to configure";
+                settings[1] = "Project description : empty, click to configure";
+                settings[2] = "Project path : empty, click to configure";
+                settings[3] = "Project type : desktop (default choice)";
+                settings[4] = "No samples added";
+            }
 
-               next.setText("finish");
-           }
+            if (cardPanel.getComponent(3).isVisible()) { /// samples page
+                next.setText("finish");
+                settings[4] = "No Samples added";
 
-           if (cardPanel.getComponent(3).isVisible()) { /// confirm page
-               // on ajoute les labels des checkBox validée dans la liste samples
-               List<String> samples = new ArrayList<>();
+                if (settingsPanel.projectNameFd.getText().length() > 0)
+                    settings[0] = "Project name : " + settingsPanel.projectNameFd.getText();
+                if (settingsPanel.projectDescriptionPn.getText().length() > 0)
+                    settings[1] = "Project description : " + settingsPanel.projectDescriptionPn.getText();
+                if (settingsPanel.projectPathFd.getText().length() > 1)
+                    settings[2] = "Project path : " + settingsPanel.projectPathFd.getText();
+                if (settingsPanel.webChoice.isSelected())
+                    settings[3] = "Project type : Web project";
 
-               for (int c = 0; c < samplesAddingPanel.checkboxes.size(); c++) {
-                   if (samplesAddingPanel.checkboxes.get(c).getState()) {
-                       samples.add(samplesAddingPanel.checkboxes.get(c).getLabel());
-                   }
-               }
+                // on ajoute les labels des checkBox validée dans la liste samples
+                // et on change la valeur de settings[4] pour accompagner la liste
+                List<String> samples = new ArrayList<>();
+                for (int c = 0; c < samplesAddingPanel.checkboxes.size(); c++) {
+                    if (samplesAddingPanel.checkboxes.get(c).getState()) {
+                        settings[4] = "Samples added :";
+                        samples.add(samplesAddingPanel.checkboxes.get(c).getLabel());
+                    }
+                }
 
-               String confirmStr = "";
-               for (int s = 0; s < settings.length; s++)
-                   confirmStr = confirmStr.concat(settings[s] + "\n");
-               for (int sa = 0; sa < samples.size(); sa++)
-                   confirmStr = confirmStr.concat(samples.get(sa) + "\n");
+                List<String> confirmLst = new ArrayList<>();
+                confirmLst.addAll(Arrays.asList(settings));
+                confirmLst.addAll(samples);
 
-               System.out.println(confirmStr);
-               confirmPanel.settingsText.setText(confirmStr);
-               confirmPanel.settingsText.revalidate();
-           }
+                confirmPanel.confirmArea.removeAll();
+                final JList confirmJlist = new JList(confirmLst.toArray(new String[0]));
+                confirmJlist.addListSelectionListener(
+                        e1 -> {
+                            next.setText("next");
+                            stepsLayout.first(cardPanel);
+                            stepsLayout.next(cardPanel);
+                        });
+
+                confirmPanel.confirmArea.add(confirmJlist);
+
+                confirmPanel.confirmArea.revalidate();
+            }
+            if (cardPanel.getComponent(4).isVisible()) { /// confirm page
+                // if all is correctly set, create the project
+                if (settingsPanel.projectNameFd.getText().length() > 0 &&
+                    settingsPanel.projectDescriptionPn.getText().length() > 0 &&
+                    settingsPanel.projectPathFd.getText().length() > 1)
+                        Project.createProject(settingsPanel.projectNameFd.getText(),
+                                settingsPanel.projectDescriptionPn.getText(),
+                                settingsPanel.projectPathFd.getText(),
+                                settingsPanel.webChoice.isSelected());
+            }
         });
         cancel.addActionListener(e -> {
             System.exit(0);
