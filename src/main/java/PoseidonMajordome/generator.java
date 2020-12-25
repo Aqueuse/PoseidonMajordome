@@ -80,6 +80,7 @@ public class generator extends JFrame {
                 }
 
                 List<String> confirmLst = new ArrayList<>();
+
                 confirmLst.addAll(Arrays.asList(settings));
                 confirmLst.addAll(samples);
 

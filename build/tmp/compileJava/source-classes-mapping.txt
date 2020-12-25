@@ -1,18 +1,18 @@
 PoseidonMajordome/FileChooser.java
  PoseidonMajordome.FileChooser
-PoseidonMajordome/WelcomeCard.java
- PoseidonMajordome.WelcomeCard
+PoseidonMajordome/Project.java
+ PoseidonMajordome.Project
+PoseidonMajordome/ConfirmCard.java
+ PoseidonMajordome.ConfirmCard
+PoseidonMajordome/BasicSettingsCard.java
+ PoseidonMajordome.BasicSettingsCard
+PoseidonMajordome/LastCard.java
+ PoseidonMajordome.LastCard
 PoseidonMajordome/Exec.java
  PoseidonMajordome.Exec
 PoseidonMajordome/SamplesAddingCard.java
  PoseidonMajordome.SamplesAddingCard
-PoseidonMajordome/BasicSettingsCard.java
- PoseidonMajordome.BasicSettingsCard
-PoseidonMajordome/ConfirmCard.java
- PoseidonMajordome.ConfirmCard
-PoseidonMajordome/Project.java
- PoseidonMajordome.Project
+PoseidonMajordome/WelcomeCard.java
+ PoseidonMajordome.WelcomeCard
 PoseidonMajordome/generator.java
  PoseidonMajordome.generator
-PoseidonMajordome/LastCard.java
- PoseidonMajordome.LastCard

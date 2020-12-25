@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class WelcomeCard extends JPanel {
-    String logoPath = "GUIgenerator/logo400.png";
+    String logoPath = "GUIgenerator/mascott_without_letters.png";
     String welcomeMessage = "\n\n\n\n\n\nWelcome to the Poseidon Majordome\n" +
             "Project Generator\n\n" +
             "Let's create a new amazing project\n\n"+
@@ -33,9 +33,9 @@ public class WelcomeCard extends JPanel {
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
         textArea.setBackground(new Color(238,238,238));
-        textArea.setPreferredSize(new Dimension(300,550));
+        textArea.setPreferredSize(new Dimension(280,550));
 
-        imgPanel.setPreferredSize(new Dimension(300,550));
+        imgPanel.setPreferredSize(new Dimension(320,550));
         imgPanel.setBackground(new Color(238,238,238));
 
         this.add(imgPanel);
@@ -59,10 +59,10 @@ public class WelcomeCard extends JPanel {
         }
 
         g2.drawImage(img,   // version complete
-                0, 50,       // dx1, dy1 - x,y destination 1st corner
-                265, 450,   // dx2, dy2 - x,y destination 2nd corner
+                20, 50,       // dx1, dy1 - x,y destination 1st corner
+                320, 391,   // dx2, dy2 - x,y destination 2nd corner
                 0, 0, // sx1, sy1 - x,y source 1st corner
-                265, 400, // sx2, sy2 - x,y source 2nd corner
+                300, 341, // sx2, sy2 - x,y source 2nd corner
                 null);     // observer - object to get image modifications
     }
 }
