@@ -2,6 +2,8 @@ package PoseidonMajordome;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
 public class generator extends JFrame {
     static JPanel globalPanel = new JPanel();
     static BoxLayout global = new BoxLayout(globalPanel, BoxLayout.Y_AXIS);
+    static JSeparator boxSeparator = new JSeparator(SwingConstants.HORIZONTAL);
 
     static CardLayout stepsLayout = new CardLayout();
     static JPanel cardPanel = new JPanel();
@@ -24,6 +27,7 @@ public class generator extends JFrame {
     static JButton previous = new JButton("previous");
     static JButton next = new JButton("next");
     static JButton cancel = new JButton("cancel");
+    static boolean nextConfirm = true;
 
     public static void windowSettings() {
         String[] settings = new String[5];
@@ -41,17 +45,17 @@ public class generator extends JFrame {
 
         previous.addActionListener(e -> {
             next.setText("next");
+            nextConfirm = true;
             if (!cardPanel.getComponent(0).isVisible())
                 stepsLayout.previous(cardPanel);
         });
-
         next.addActionListener(e -> {
-            stepsLayout.next(cardPanel);
+            if (nextConfirm) stepsLayout.next(cardPanel);
 
             if (cardPanel.getComponent(2).isVisible()) {  /// basic settings page
                 settings[0] = "Project name : empty, click to configure";
                 settings[1] = "Project description : empty, click to configure";
-                settings[2] = "Project path : empty, click to configure";
+                settings[2] = "Project path : invalid, click to configure";
                 settings[3] = "Project type : desktop (default choice)";
                 settings[4] = "No samples added";
             }
@@ -64,7 +68,7 @@ public class generator extends JFrame {
                     settings[0] = "Project name : " + settingsPanel.projectNameFd.getText();
                 if (settingsPanel.projectDescriptionPn.getText().length() > 0)
                     settings[1] = "Project description : " + settingsPanel.projectDescriptionPn.getText();
-                if (settingsPanel.projectPathFd.getText().length() > 1)
+                if (Files.exists(Paths.get(settingsPanel.projectPathFd.getText())))
                     settings[2] = "Project path : " + settingsPanel.projectPathFd.getText();
                 if (settingsPanel.webChoice.isSelected())
                     settings[3] = "Project type : Web project";
@@ -91,22 +95,29 @@ public class generator extends JFrame {
                             next.setText("next");
                             stepsLayout.first(cardPanel);
                             stepsLayout.next(cardPanel);
+                            nextConfirm = true;
                         });
 
                 confirmPanel.confirmArea.add(confirmJlist);
-
                 confirmPanel.confirmArea.revalidate();
+
+                if (settingsPanel.projectNameFd.getText().length() == 0) {
+                    nextConfirm=false;
+                    confirmJlist.setForeground(Color.red);
+                    confirmJlist.revalidate();
+                }
+                if (!Files.exists(Paths.get(settingsPanel.projectPathFd.getText()))) {
+                    nextConfirm = false;
+                }
             }
             if (cardPanel.getComponent(4).isVisible()) { /// confirm page
-                // if all is correctly set, create the project
-                if (settingsPanel.projectNameFd.getText().length() > 0 &&
-                    settingsPanel.projectDescriptionPn.getText().length() > 0 &&
-                    settingsPanel.projectPathFd.getText().length() > 1)
-                        Project.createProject(settingsPanel.projectNameFd.getText(),
-                                settingsPanel.projectDescriptionPn.getText(),
-                                settingsPanel.projectPathFd.getText(),
-                                settingsPanel.webChoice.isSelected());
-            }
+                Project.createProject(settingsPanel.projectNameFd.getText(),
+                            settingsPanel.projectDescriptionPn.getText(),
+                            settingsPanel.projectPathFd.getText(),
+                            settingsPanel.webChoice.isSelected());
+                buttonsPanel.setVisible(false);
+                boxSeparator.setVisible(false);
+                }
         });
         cancel.addActionListener(e -> {
             System.exit(0);
@@ -122,7 +133,7 @@ public class generator extends JFrame {
         buttonsPanel.add(cancel);
 
         globalPanel.add(cardPanel);
-        globalPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        globalPanel.add(boxSeparator);
         globalPanel.add(buttonsPanel);
     }
 

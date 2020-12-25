@@ -64,16 +64,27 @@ public class Project {
         }
     }
 
-    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation) throws IOException {
-        Files.walk(Paths.get(sourceDirectoryLocation))
-                .forEach(source -> {
-                    Path destination = Paths.get(destinationDirectoryLocation, source.toString()
-                            .substring(sourceDirectoryLocation.length()));
-                    try {
-                        Files.copy(source, destination);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation) {
+        try {
+            if (Files.exists(Paths.get(destinationDirectoryLocation))) {
+                System.out.println("directory exist already");
+                Files.deleteIfExists(Paths.get(destinationDirectoryLocation));
+            }
+            else {
+                Files.walk(Paths.get(sourceDirectoryLocation))
+                        .forEach(source -> {
+                            Path destination = Paths.get(destinationDirectoryLocation, source.toString()
+                                    .substring(sourceDirectoryLocation.length()));
+                            try {
+                                Files.copy(source, destination, REPLACE_EXISTING);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+            }
+        }
+        catch (IOException io) {
+            System.out.println(io+" in class Project in method copyDirectory");
+        }
     }
 }
