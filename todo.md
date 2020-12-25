@@ -8,14 +8,13 @@ Desktop application :
             + Set project location
             + Set project style
                 + desktop application :
-                    - copy base project sample (with gradle embedded) in the location
-                      folder name = project name and description = description in the build.gradle
-                    - gradle init
+                    - copy base project sample in the location
+                      folder name = project name
 
                 + web application :
                     - copy base project sample (with gradle/tomcat embedded) in the location
                       with folder name = project name and description in the build.gradle
-                    - gradle init
+
     + class Add
         * add Servlet template => copy Servlet Sample with embed tomcat and basic get/post/credentials management
             /!\ if desktop project : warning for project type transformation
@@ -27,5 +26,5 @@ Desktop application :
         * add external dependencies folder => open the externalDependencies folder in the file explorer
 
     + class Exec
-        * test locally : gradle run + console output
+        * test locally : gradle init => gradle run => console output
         * create application bundle : gradle fatbuild + explorateur de fichiers pour sauver
