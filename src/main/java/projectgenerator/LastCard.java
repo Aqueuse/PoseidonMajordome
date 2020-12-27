@@ -1,4 +1,4 @@
-package PoseidonMajordome;
+package projectgenerator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class LastCard extends JPanel {
     String logoPath = "GUIgenerator/mascott_without_letters.png";
-    String welcomeMessage = "\n\n\n\n\n\n\n\nProject created, good job !\n";
+    String welcomeMessage = "\n\n\n\n\n\n\n\nProject created, good job !";
 
     public JTextPane textArea = new JTextPane();
     public JPanel imgPanel = new JPanel();

@@ -1,4 +1,4 @@
-package PoseidonMajordome;
+package projectgenerator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -50,7 +50,7 @@ public class Project {
                             PackageName + "/" + SampleName + ".java"),
                     REPLACE_EXISTING);
         } catch (IOException io) {
-            System.out.println(io + "in PoseidonMajordome.addRscript.create()");
+            System.out.println(io + "in projectgenerator.addRscript.create()");
         }
     }
 
@@ -60,7 +60,7 @@ public class Project {
                     Paths.get(ProjectPathStr + "app/externalDependencies/" + dependencieName),
                     REPLACE_EXISTING);
         } catch (IOException io) {
-            System.out.println(io + "in PoseidonMajordome.Project.copyDependencies()");
+            System.out.println(io + "in projectgenerator.Project.copyDependencies()");
         }
     }
 

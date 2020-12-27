@@ -1,4 +1,4 @@
-package PoseidonMajordome;
+package projectgenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -135,19 +135,5 @@ public class generator extends JFrame {
         globalPanel.add(cardPanel);
         globalPanel.add(boxSeparator);
         globalPanel.add(buttonsPanel);
-    }
-
-    public static void main(String[] Args) throws ClassNotFoundException, UnsupportedLookAndFeelException,
-            InstantiationException, IllegalAccessException {
-        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-
-        generator newProject = new generator();
-        newProject.getContentPane().add(globalPanel);
-        windowSettings();
-        newProject.setResizable(false);
-        newProject.pack();
-        newProject.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        newProject.setLocationRelativeTo(null);
-        newProject.setVisible(true);
     }
 }

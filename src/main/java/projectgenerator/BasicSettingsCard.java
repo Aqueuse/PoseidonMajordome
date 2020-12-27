@@ -1,4 +1,4 @@
-package PoseidonMajordome;
+package projectgenerator;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

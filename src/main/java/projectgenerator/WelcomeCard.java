@@ -1,4 +1,4 @@
-package PoseidonMajordome;
+package projectgenerator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

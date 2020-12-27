@@ -1,6 +1,4 @@
-package PoseidonMajordome;
-
-import javax.swing.JFileChooser;
+package projectgenerator;
 
 public class Exec {
     // test locally : gradle build + run + console output
