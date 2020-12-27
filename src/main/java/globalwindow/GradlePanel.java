@@ -35,6 +35,10 @@ public class GradlePanel extends JInternalFrame implements ComponentListener {
                 Window.gradle.getWidth(),0,
                 Window.globalWindowPanel.getWidth()-Window.gradle.getWidth(),Window.globalWindowPanel.getHeight()
         );
+        Window.globalWindowPanel.setBounds(
+                0,0,
+                Window.navigator.getWidth()+Window.viewContainer.getWidth(),Window.viewContainer.getHeight()
+        );
     }
 
     @Override
