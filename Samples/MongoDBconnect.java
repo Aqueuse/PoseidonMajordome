@@ -1,4 +1,4 @@
-package PoseidonMajordome;
+package projectgenerator;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -11,7 +11,7 @@ public class addMongoDB {
     public static void connectDbNoAuthentication() {
         MongoClient mongoClient = new MongoClient();
     }
- 
+
     public static void connectDbWithCredentials(String ServerName, int address, String user, String source, String password) {
         char[] passwordCharArray = password.toCharArray(); // the password as a character array
         
