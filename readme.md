@@ -2,7 +2,7 @@
 ![logo](https://github.com/Aqueuse/PoseidonMajordome/blob/main/GUIgenerator/mascott_without_letters.png)
 
 
-A generator to speed up DataScience and API Java development
+A generator to speed up DataScience and Java API development
 =============================================================
 
 Generate Java Source Template to :
