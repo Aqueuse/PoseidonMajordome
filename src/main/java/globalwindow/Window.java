@@ -36,6 +36,7 @@ public class Window extends JFrame  implements ComponentListener {
 
         this.addComponentListener(this);
 
+        this.setTitle("Poseidon Majordome - DataScience Accelerator");
         this.setSize(initialWindowWidth, initialWindowHeight);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -52,8 +53,8 @@ public class Window extends JFrame  implements ComponentListener {
 
     @Override
     public void componentResized(ComponentEvent e) {
-        viewContainer.setBounds(gradle.getWidth(), 0, globalWindowPanel.getWidth()-200, globalWindowPanel.getHeight());
-        gradle.setBounds(0, navigator.getHeight(), gradle.getWidth(), globalWindowPanel.getHeight());
+        viewContainer.setBounds(gradle.getWidth()-7, 0, (globalWindowPanel.getWidth()-Window.gradle.getWidth())+7, globalWindowPanel.getHeight());
+        Window.gradle.setSize(Window.navigator.getWidth(), Window.viewContainer.getHeight()-Window.navigator.getHeight());
     }
 
     @Override

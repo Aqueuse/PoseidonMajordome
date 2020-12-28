@@ -20,24 +20,18 @@ public class GradlePanel extends JInternalFrame implements ComponentListener {
 
         this.setTitle("Gradle tasks");
         this.setResizable(true);
-        this.setSize(200,600);
-        this.setLocation(0,200);
+        this.setSize(200,400);
+        this.setLocation(-7,200);
         this.setVisible(true);
     }
 
     @Override
     public void componentResized(ComponentEvent e) {
-        Window.navigator.setBounds(
-                0,0,
-                Window.gradle.getWidth(),Window.gradle.getY()
-        );
+        Window.navigator.setSize(Window.gradle.getWidth(), Window.viewContainer.getHeight()-Window.gradle.getHeight());
+
         Window.viewContainer.setBounds(
-                Window.gradle.getWidth(),0,
-                Window.globalWindowPanel.getWidth()-Window.gradle.getWidth(),Window.globalWindowPanel.getHeight()
-        );
-        Window.globalWindowPanel.setBounds(
-                0,0,
-                Window.navigator.getWidth()+Window.viewContainer.getWidth(),Window.viewContainer.getHeight()
+                Window.gradle.getWidth()-7,0,
+                (Window.globalWindowPanel.getWidth()-Window.gradle.getWidth())+7,Window.globalWindowPanel.getHeight()
         );
     }
 

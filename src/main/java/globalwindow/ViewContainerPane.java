@@ -1,7 +1,6 @@
 package globalwindow;
 
 import javax.swing.*;
-import java.awt.event.MouseListener;
 
 public class ViewContainerPane extends JInternalFrame {
     public ViewContainerPane()  {

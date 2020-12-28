@@ -20,20 +20,20 @@ public class TreeNavigator extends JInternalFrame implements ComponentListener {
 
         this.setTitle("File explorer");
         this.setResizable(true);
-        this.setSize(200,200);
-        this.setLocation(0,0);
+        this.setSize(200,400);
+        this.setLocation(-7,0);
         this.setVisible(true);
     }
 
     @Override
     public void componentResized(ComponentEvent e) {
-        Window.gradle.setBounds(
-                0,Window.navigator.getHeight(),
-                Window.navigator.getWidth(),Window.gradle.getHeight()
-        );
+        Window.navigator.setLocation(-7,0);
+        Window.gradle.setLocation(-7,Window.navigator.getHeight());
+        Window.gradle.setSize(Window.navigator.getWidth(), Window.viewContainer.getHeight()-Window.navigator.getHeight());
+
         Window.viewContainer.setBounds(
-                Window.gradle.getWidth(),0,
-                Window.globalWindowPanel.getWidth()-Window.gradle.getWidth(),Window.globalWindowPanel.getHeight()
+                Window.gradle.getWidth()-7,0,
+                (Window.globalWindowPanel.getWidth()-Window.gradle.getWidth())+7,Window.globalWindowPanel.getHeight()
         );
     }
 
