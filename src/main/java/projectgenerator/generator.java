@@ -29,7 +29,7 @@ public class generator extends JFrame {
     static JButton cancel = new JButton("cancel");
     static boolean nextConfirm = true;
 
-    public static void windowSettings() {
+    public generator() {
         String[] settings = new String[5];
 
         globalPanel.setLayout(global);

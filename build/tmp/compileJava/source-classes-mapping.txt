@@ -16,13 +16,13 @@ projectgenerator/Exec.java
  projectgenerator.Exec
 projectgenerator/FileChooser.java
  projectgenerator.FileChooser
-globalwindow/WindowMenu.java
- globalwindow.WindowMenu
+globalwindow/GradlePanel.java
+ globalwindow.GradlePanel
 globalwindow/ViewContainerPane.java
  globalwindow.ViewContainerPane
 globalwindow/TreeNavigator.java
  globalwindow.TreeNavigator
 globalwindow/Window.java
  globalwindow.Window
-globalwindow/GradlePanel.java
- globalwindow.GradlePanel
+globalwindow/WindowMenu.java
+ globalwindow.WindowMenu
