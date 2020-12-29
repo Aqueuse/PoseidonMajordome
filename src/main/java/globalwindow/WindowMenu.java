@@ -27,6 +27,8 @@ public class WindowMenu extends JMenuBar {
         public JMenuItem openManual = new JMenuItem("Open manual");
 
     public WindowMenu() {
+            newProject.addActionListener(e -> new projectgenerator.generator());
+
             projectMenu.add(newProject);
             projectMenu.add(openProject);
             projectMenu.add(saveProject);

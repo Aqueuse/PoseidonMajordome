@@ -36,7 +36,6 @@ public class WelcomeCard extends JPanel {
         textArea.setPreferredSize(new Dimension(280,550));
 
         imgPanel.setPreferredSize(new Dimension(320,550));
-        imgPanel.setBackground(new Color(238,238,238));
 
         this.add(imgPanel);
         this.add(textArea);
@@ -45,9 +44,9 @@ public class WelcomeCard extends JPanel {
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
 
-        imgPanel.paint(g2);
+        super.paint(g2);
         textArea.repaint();
 
         BufferedImage img = null;

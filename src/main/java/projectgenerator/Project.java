@@ -43,27 +43,6 @@ public class Project {
         }
     }
 
-    public void addSample(String SampleName) {
-        try {
-            Files.copy(Paths.get("Samples/" + SampleName),
-                    Paths.get(ProjectPathStr + "app/main/java/" +
-                            PackageName + "/" + SampleName + ".java"),
-                    REPLACE_EXISTING);
-        } catch (IOException io) {
-            System.out.println(io + "in projectgenerator.addRscript.create()");
-        }
-    }
-
-    public void copyDependencies(String dependenciePath, String dependencieName) {
-        try {
-            Files.copy(Paths.get(dependenciePath),
-                    Paths.get(ProjectPathStr + "app/externalDependencies/" + dependencieName),
-                    REPLACE_EXISTING);
-        } catch (IOException io) {
-            System.out.println(io + "in projectgenerator.Project.copyDependencies()");
-        }
-    }
-
     public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation) {
         try {
             if (Files.exists(Paths.get(destinationDirectoryLocation))) {

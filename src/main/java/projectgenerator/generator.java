@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class generator extends JFrame {
+public class generator {
+    static JFrame windowGenerator = new JFrame();
     static JPanel globalPanel = new JPanel();
     static BoxLayout global = new BoxLayout(globalPanel, BoxLayout.Y_AXIS);
     static JSeparator boxSeparator = new JSeparator(SwingConstants.HORIZONTAL);
@@ -89,7 +90,7 @@ public class generator extends JFrame {
                 confirmLst.addAll(samples);
 
                 confirmPanel.confirmArea.removeAll();
-                final JList confirmJlist = new JList(confirmLst.toArray(new String[0]));
+                final JList<String> confirmJlist = new JList<>(confirmLst.toArray(new String[0]));
                 confirmJlist.addListSelectionListener(
                         e1 -> {
                             next.setText("next");
@@ -119,9 +120,7 @@ public class generator extends JFrame {
                 boxSeparator.setVisible(false);
                 }
         });
-        cancel.addActionListener(e -> {
-            System.exit(0);
-        });
+        cancel.addActionListener(e -> windowGenerator.dispose());
 
         buttonsPanel.setLayout(buttonsLayout);
         buttonsPanel.setPreferredSize(new Dimension(700, 50));
@@ -135,5 +134,12 @@ public class generator extends JFrame {
         globalPanel.add(cardPanel);
         globalPanel.add(boxSeparator);
         globalPanel.add(buttonsPanel);
+
+        windowGenerator.add(globalPanel);
+        windowGenerator.setSize(700,600);
+        windowGenerator.setLocationRelativeTo(null);
+        windowGenerator.setResizable(false);
+        windowGenerator.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        windowGenerator.setVisible(true);
     }
 }
