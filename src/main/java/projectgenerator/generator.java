@@ -9,28 +9,49 @@ import java.util.Arrays;
 import java.util.List;
 
 public class generator {
-    static JFrame windowGenerator = new JFrame();
-    static JPanel globalPanel = new JPanel();
-    static BoxLayout global = new BoxLayout(globalPanel, BoxLayout.Y_AXIS);
-    static JSeparator boxSeparator = new JSeparator(SwingConstants.HORIZONTAL);
+    static JFrame windowGenerator;
+    static JPanel globalPanel;
+    static BoxLayout global;
+    static JSeparator boxSeparator;
 
-    static CardLayout stepsLayout = new CardLayout();
-    static JPanel cardPanel = new JPanel();
+    static CardLayout stepsLayout;
+    static JPanel cardPanel;
 
-    static WelcomeCard WelcomePanel = new WelcomeCard();
-    static BasicSettingsCard settingsPanel = new BasicSettingsCard();
-    static SamplesAddingCard samplesAddingPanel = new SamplesAddingCard();
-    static ConfirmCard confirmPanel = new ConfirmCard();
-    static LastCard lastPanel = new LastCard();
+    static WelcomeCard WelcomePanel;
+    static BasicSettingsCard settingsPanel;
+    static SamplesAddingCard samplesAddingPanel;
+    static ConfirmCard confirmPanel;
+    static LastCard lastPanel;
 
-    static JPanel buttonsPanel = new JPanel();
-    static BoxLayout buttonsLayout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
-    static JButton previous = new JButton("previous");
-    static JButton next = new JButton("next");
-    static JButton cancel = new JButton("cancel");
-    static boolean nextConfirm = true;
+    static JPanel buttonsPanel;
+    static BoxLayout buttonsLayout;
+    static JButton previous;
+    static JButton next;
+    static JButton cancel;
+    static boolean nextConfirm;
 
     public generator() {
+        windowGenerator = new JFrame();
+        globalPanel = new JPanel();
+        global = new BoxLayout(globalPanel, BoxLayout.Y_AXIS);
+        boxSeparator = new JSeparator(SwingConstants.HORIZONTAL);
+
+        stepsLayout = new CardLayout();
+        cardPanel = new JPanel();
+
+        WelcomePanel = new WelcomeCard();
+        settingsPanel = new BasicSettingsCard();
+        samplesAddingPanel = new SamplesAddingCard();
+        confirmPanel = new ConfirmCard();
+        lastPanel = new LastCard();
+
+        buttonsPanel = new JPanel();
+        buttonsLayout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
+        previous = new JButton("previous");
+        next = new JButton("next");
+        cancel = new JButton("cancel");
+        nextConfirm = true;
+
         String[] settings = new String[5];
 
         globalPanel.setLayout(global);

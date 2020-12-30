@@ -25,6 +25,10 @@ public class Window {
     public static int initialWindowWidth = 1200;
 
     public static void main(String[] Args) {
+        // 2 tricks to have a perfect 2D rendering of the Swing window
+        System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
         globalWindowPanel.add(navigator);
         globalWindowPanel.add(gradle);
         globalWindowPanel.add(viewContainer);
@@ -52,10 +56,6 @@ public class Window {
 
             }
         });
-
-        // 2 tricks to have a perfect 2D rendering of the Swing window
-        System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
-        JFrame.setDefaultLookAndFeelDecorated(true);
 
         windowGlobal.add(globalWindowPanel);
         windowGlobal.setJMenuBar(menu);

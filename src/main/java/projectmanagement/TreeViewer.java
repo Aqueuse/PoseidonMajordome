@@ -1,11 +1,22 @@
 package projectmanagement;
 
-import javax.swing.*;
+import globalwindow.TreeNavigator;
 
-public class TreeViewer extends JPanel {
-    public JTree filesViewer = new JTree();
+public class TreeViewer {
+    public static void exploreProject(String sourceDirectoryLocation) {
+//        JScrollPane scrollPane = new JScrollPane();
+        FileTree projectTree = new FileTree(sourceDirectoryLocation);
 
-    public TreeViewer() {
+        projectTree.setVisibleRowCount(15);
+        projectTree.setRootVisible(true);
+        projectTree.setVisible(true);
 
+//        scrollPane.setPreferredSize(new Dimension(TreeNavigator.treePanel.getWidth(),TreeNavigator.treePanel.getHeight()));
+
+//      scrollPane.add(projectTree);
+        TreeNavigator.treePanel.add(projectTree);
+        TreeNavigator.treePanel.revalidate();
     }
 }
+
+

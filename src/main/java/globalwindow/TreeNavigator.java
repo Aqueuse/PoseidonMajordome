@@ -6,16 +6,16 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseListener;
 
 public class TreeNavigator extends JInternalFrame implements ComponentListener {
-    public TreeNavigator() {
-        JPanel treePanel = new JPanel();
-        this.add(treePanel);
+    public static JPanel treePanel = new JPanel();
 
+    public TreeNavigator() {
         // desactivate the possibility of moving the frame to create an IDE typical structure
         for (MouseListener listener : ( (javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI() )
                 .getNorthPane().getMouseListeners()) {
             ( (javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI() ).getNorthPane().removeMouseListener(listener);
         }
 
+        this.add(treePanel);
         this.addComponentListener(this);
 
         this.setTitle("File explorer");

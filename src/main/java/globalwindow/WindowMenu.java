@@ -1,5 +1,8 @@
 package globalwindow;
 
+import projectmanagement.OpenProject;
+import projectmanagement.SaveProject;
+
 import javax.swing.*;
 
 public class WindowMenu extends JMenuBar {
@@ -27,10 +30,11 @@ public class WindowMenu extends JMenuBar {
         public JMenuItem openManual = new JMenuItem("Open manual");
 
     public WindowMenu() {
-            newProject.addActionListener(e -> new projectgenerator.generator());
-
+                newProject.addActionListener(e -> new projectgenerator.generator());
             projectMenu.add(newProject);
+                openProject.addActionListener(e -> new OpenProject());
             projectMenu.add(openProject);
+                saveProject.addActionListener(e -> new SaveProject());
             projectMenu.add(saveProject);
             projectMenu.add(closeProject);
             projectMenu.add(new JSeparator());

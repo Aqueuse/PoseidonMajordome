@@ -1,35 +1,37 @@
-globalwindow/GradlePanel.java
- globalwindow.GradlePanel
-projectgenerator/BasicSettingsCard.java
- projectgenerator.BasicSettingsCard
-globalwindow/TreeNavigator.java
- globalwindow.TreeNavigator
-projectmanagement/SaveProject.java
- projectmanagement.SaveProject
-projectgenerator/LastCard.java
- projectgenerator.LastCard
-projectgenerator/ConfirmCard.java
- projectgenerator.ConfirmCard
-projectgenerator/SamplesAddingCard.java
- projectgenerator.SamplesAddingCard
-projectgenerator/Exec.java
- projectgenerator.Exec
-projectgenerator/FileChooser.java
- projectgenerator.FileChooser
-projectmanagement/OpenProject.java
- projectmanagement.OpenProject
-globalwindow/ViewContainerPane.java
- globalwindow.ViewContainerPane
-projectmanagement/TreeViewer.java
- projectmanagement.TreeViewer
 projectgenerator/Project.java
  projectgenerator.Project
+projectgenerator/BasicSettingsCard.java
+ projectgenerator.BasicSettingsCard
+globalwindow/ViewContainerPane.java
+ globalwindow.ViewContainerPane
 projectgenerator/generator.java
  projectgenerator.generator
 globalwindow/Window.java
  globalwindow.Window
  globalwindow.Window$1
+globalwindow/GradlePanel.java
+ globalwindow.GradlePanel
+projectgenerator/SamplesAddingCard.java
+ projectgenerator.SamplesAddingCard
+projectmanagement/SaveProject.java
+ projectmanagement.SaveProject
+globalwindow/TreeNavigator.java
+ globalwindow.TreeNavigator
+projectgenerator/Exec.java
+ projectgenerator.Exec
+projectgenerator/FileChooser.java
+ projectgenerator.FileChooser
 globalwindow/WindowMenu.java
  globalwindow.WindowMenu
 projectgenerator/WelcomeCard.java
  projectgenerator.WelcomeCard
+projectgenerator/ConfirmCard.java
+ projectgenerator.ConfirmCard
+projectgenerator/LastCard.java
+ projectgenerator.LastCard
+projectmanagement/FileTree.java
+ projectmanagement.FileTree
+projectmanagement/OpenProject.java
+ projectmanagement.OpenProject
+projectmanagement/TreeViewer.java
+ projectmanagement.TreeViewer
