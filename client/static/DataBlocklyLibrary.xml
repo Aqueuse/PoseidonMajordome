@@ -1,0 +1,26 @@
+<xml xmlns="https://developers.google.com/blockly/xml"><block type="factory_base" id="AmtF:wsRZ{o5O$dm]E3o" deletable="false" movable="false" x="10" y="10">
+    <mutation connections="BOTTOM"></mutation>
+    <field name="NAME">CSV file</field>
+    <field name="INLINE">EXT</field>
+    <field name="CONNECTIONS">BOTTOM</field>
+    <value name="TOOLTIP">
+      <block type="text" id="W@]}3c-~,I0zaz2nfHi/" deletable="false" movable="false">
+        <field name="TEXT">CSV file</field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="p[8s+=ZX5cze%ELvUy1B" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="i]6)$eGdYV}Zu4=so@Oi"></shadow>
+      <block type="type_string" id="K]bTQP*/,z4UMY#ASgN1"></block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="a~tAkL]H^EzuAh[r|MJJ">
+        <mutation colour="#5b80a5"></mutation>
+        <field name="HUE">210</field>
+      </block>
+    </value>
+  </block></xml>

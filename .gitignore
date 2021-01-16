@@ -2,3 +2,4 @@
 /Samples/
 /build/
 /.gradle/
+*.exe
