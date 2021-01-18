@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href='style.css'>
+  <title>DataScience accelerator</title>
+</head>
+
+<body onload="barsInitialPlacement()">
+
+  <div class="wrapper">
+    <div id="sidebarLeft" class="sidebar-left" style="width:15%">
+      <div class="box">input 1</div>
+      <div class="box">input 2</div>
+    </div>
+    <div id="draghandleLeft" class="draghandle-left" onmousedown="sideMove='left'; initResize(event);"></div>
+
+    <div id="draghandleRight" class="draghandle-right" onmousedown="sideMove='right'; initResize(event);"></div>
+    <div id="sidebarRight" class="sidebar-right" style="left:75%; width: 35%;">
+      <div class="box">output 1</div>
+      <div class="box">output 2</div>
+    </div>
+
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="fr.js"></script>
+  
+    <xml id="toolbox">
+      <block type="controls_if"></block>
+      <block type="controls_repeat_ext"></block>
+      <block type="logic_compare"></block>
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="text"></block>
+      <block type="text_print"></block>
+    </xml>
+
+    <div id="blocklyContainerID" class="blocklyContainer">
+      <div id="blocklyDiv" style="position: absolute;"></div>
+    </div>
+
+    <script>
+      var toolbox = '<xml>';
+      toolbox += '  <block type="controls_if"></block>';
+      toolbox += '  <block type="controls_whileUntil"></block>';
+      toolbox += '</xml>';
+
+      var workspace = Blockly.inject(blocklyDiv,
+        { toolbox: document.getElementById('toolbox') });
+
+      let onresize = function (e) {
+        var blocklyContainer = document.getElementById('blocklyContainerID');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var sidebarLeft = document.getElementById("sidebarLeft");
+        var sidebarRight = document.getElementById("sidebarRight");
+
+        // Position blocklyDiv over blocklyContainer.
+        blocklyDiv.style.left = '0px';
+        blocklyDiv.style.top = '0px';
+        blocklyDiv.style.width = "95%";
+        blocklyDiv.style.height = "100%";
+        Blockly.svgResize(workspace);
+      };
+
+      window.addEventListener('resize', onresize, false);
+    </script>
+    <script src="index.js"></script>
+  </div>
+</body>
+
+</html>
