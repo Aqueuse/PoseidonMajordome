@@ -3,8 +3,8 @@ package globalContainer;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-
-import org.graalvm.polyglot.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -20,7 +20,9 @@ public class init {
         JFrame window = new JFrame();
 
         CefClient client = myApp.createClient();
-        final CefBrowser browser = client.createBrowser("file:///E:/backup_data_files/JavaProjects/PoseidonMajordome/NodejsApp/static/index.html", true, false);
+
+        Path clientPath = Paths.get("static/index.html");
+        final CefBrowser browser = client.createBrowser(clientPath.toAbsolutePath().toString(), true, false);
         final Component browserUI = browser.getUIComponent();
         window.add(browserUI);
 
