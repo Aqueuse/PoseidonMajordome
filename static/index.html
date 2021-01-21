@@ -9,65 +9,174 @@
 </head>
 
 <body onload="barsInitialPlacement()">
-
   <div class="wrapper">
-    <div id="sidebarLeft" class="sidebar-left" style="width:15%">
-      <div class="box">input 1</div>
-      <div class="box">input 2</div>
-    </div>
-    <div id="draghandleLeft" class="draghandle-left" onmousedown="sideMove='left'; initResize(event);"></div>
-
     <div id="draghandleRight" class="draghandle-right" onmousedown="sideMove='right'; initResize(event);"></div>
     <div id="sidebarRight" class="sidebar-right" style="left:75%; width: 35%;">
-      <div class="box">output 1</div>
-      <div class="box">output 2</div>
+    <!--
+       /// write thisDiv.innerHTML with :
+       <img src=""> OR
+       <table>CSV</table> OR
+       <pre>JSON</pre> OR
+       <form>Distant API</form>
+    -->
     </div>
 
+    <script src="closure/goog/base.js"></script>
     <script src="blockly_compressed.js"></script>
-    <script src="blocks_compressed.js"></script>
-    <script src="fr.js"></script>
-  
-    <xml id="toolbox">
-      <block type="controls_if"></block>
-      <block type="controls_repeat_ext"></block>
-      <block type="logic_compare"></block>
-      <block type="math_number"></block>
-      <block type="math_arithmetic"></block>
-      <block type="text"></block>
-      <block type="text_print"></block>
+    <script src="msg/js/en.js"></script>
+
+    <script src="blocks/colour.js"></script>
+    <script src="blocks/lists.js"></script>
+    <script src="blocks/logic.js"></script>
+    <script src="blocks/loops.js"></script>
+    <script src="blocks/math.js"></script>
+    <script src="blocks/procedures.js"></script>
+    <script src="blocks/text.js"></script>
+    <script src="blocks/variables.js"></script>
+    <script src="blocks/variables_dynamic.js"></script>
+    <script src="blocks/inputOutput.js"></script>
+
+    <xml id="toolbox" style="display: none">
+      <category name=" Input">
+        <block type="input_downloadTextFile"></block>
+      </category>
+      <category name="Output">
+        <block type="colour_picker"></block>
+      </category>
+
+      <sep gap="8"></sep>
+
+      <category name="Variables">
+        <block type="variables_get_dynamic"></block>
+      </category>
+      <category name="Lists">
+        <block type="lists_create_with_container"></block>
+        <block type="lists_create_with_item"></block>
+        <block type="lists_indexOf"></block>
+        <block type="lists_getIndex"></block>
+        <block type="lists_setIndex"></block>
+        <block type="lists_sort"></block>
+        <block type="lists_split"></block>
+      </category>
+
+      <sep gap="8"></sep>
+
+      <category name="maths">
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="math_single"></block>
+        <block type="math_trig"></block>
+        <block type="math_constant"></block>
+        <block type="math_number_property"></block>
+        <block type="math_change"></block>
+        <block type="math_round"></block>
+        <block type="math_on_list"></block>
+        <block type="math_modulo"></block>
+        <block type="math_constrain"></block>
+        <block type="math_random_int"></block>
+        <block type="math_random_float"></block>
+        <block type="math_atan2"></block>
+      </category>
+
+      <sep gap="8"></sep>
+
+      <category name="Logic">
+        <block type="controls_if"></block>
+        <block type="controls_ifelse"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_boolean"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_null"></block>
+        <block type="logic_ternary"></block>
+      </category>
+      <category name="loops">
+        <block type="controls_whileUntil"></block>
+        <block type="controls_for"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="controls_repeat"></block>
+        <block type="controls_forEach"></block>
+      </category>
+      <category name="function">
+        <block type="procedures_defnoreturn"></block>
+        <block type="procedures_defreturn"></block>
+        <block type="procedures_mutatorcontainer"></block>
+        <block type="procedures_mutatorarg"></block>
+        <block type="procedures_callnoreturn"></block>
+        <block type="procedures_callreturn"></block>
+        <block type="procedures_ifreturn"></block>
+      </category>
+
+      <sep gap="8"></sep>
+
+      <category name="text">
+        <block type="text_getSubstring"></block>
+        <block type="text_changeCase"></block>
+        <block type="text_trim"></block>
+        <block type="text_print"></block>
+        <block type="text_prompt_ext"></block>
+        <block type="text_prompt"></block>
+        <block type="text_count"></block>
+        <block type="text_replace"></block>
+        <block type="text_reverse"></block>
+      </category>
+      <category name="Colours">
+        <block type="colour_picker"></block>
+        <block type="colour_rgb"></block>
+        <block type="colour_random"></block>
+        <block type="colour_blend"></block>
+      </category>
     </xml>
 
     <div id="blocklyContainerID" class="blocklyContainer">
-      <div id="blocklyDiv" style="position: absolute;"></div>
+        <div id="blocklyDiv" style="position: absolute;"></div>
     </div>
 
     <script>
-      var toolbox = '<xml>';
-      toolbox += '  <block type="controls_if"></block>';
-      toolbox += '  <block type="controls_whileUntil"></block>';
-      toolbox += '</xml>';
-
-      var workspace = Blockly.inject(blocklyDiv,
-        { toolbox: document.getElementById('toolbox') });
-
-      let onresize = function (e) {
-        var blocklyContainer = document.getElementById('blocklyContainerID');
-        var blocklyDiv = document.getElementById('blocklyDiv');
-        var sidebarLeft = document.getElementById("sidebarLeft");
-        var sidebarRight = document.getElementById("sidebarRight");
-
-        // Position blocklyDiv over blocklyContainer.
-        blocklyDiv.style.left = '0px';
-        blocklyDiv.style.top = '0px';
-        blocklyDiv.style.width = "95%";
-        blocklyDiv.style.height = "100%";
-        Blockly.svgResize(workspace);
+      var options = {
+    	toolbox : toolbox,
+	    collapse : true,
+	    comments : true,
+	    disable : false,
+	    maxBlocks : Infinity,
+	    trashcan : false,
+	    horizontalLayout : false,
+	    toolboxPosition : 'start',
+	    css : true,
+	    media : 'https://blockly-demo.appspot.com/static/media/',
+	    rtl : false,
+	    scrollbars : true,
+	    sounds : true,
+	    oneBasedIndex : true,
+	    zoom : {
+		  controls : true,
+		  wheel : true,
+		  startScale : 1,
+		  maxScale : 3,
+		  minScale : 0.3,
+		  scaleSpeed : 1.2
+	    }
       };
 
-      window.addEventListener('resize', onresize, false);
+       var workspace = Blockly.inject(blocklyDiv, options);
+
+         let onresize = function (e) {
+            var blocklyContainer = document.getElementById('blocklyContainerID');
+            var blocklyDiv = document.getElementById('blocklyDiv');
+            var sidebarLeft = document.getElementById("sidebarLeft");
+            var sidebarRight = document.getElementById("sidebarRight");
+
+            // Position blocklyDiv over blocklyContainer.
+            blocklyDiv.style.left = '0px';
+            blocklyDiv.style.top = '0px';
+            blocklyDiv.style.width = "100%";
+            blocklyDiv.style.height = "100%";
+            Blockly.svgResize(workspace);
+         };
+
+         window.addEventListener('resize', onresize, false);
     </script>
     <script src="index.js"></script>
   </div>
 </body>
-
 </html>
