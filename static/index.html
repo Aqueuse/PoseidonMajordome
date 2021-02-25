@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,177 +7,172 @@
 </head>
 
 <body onload="barsInitialPlacement()">
+  <script src="./libs/blockly/closure/goog/base.js"></script>
+  <script src="./libs/blockly/blockly_compressed.js"></script>
+  <script src="./libs/blockly/msg/js/en.js"></script>
+
+  <script src="./libs/blockly/blocks/colour.js"></script>
+  <script src="./libs/blockly/blocks/lists.js"></script>
+  <script src="./libs/blockly/blocks/logic.js"></script>
+  <script src="./libs/blockly/blocks/loops.js"></script>
+  <script src="./libs/blockly/blocks/math.js"></script>
+  <script src="./libs/blockly/blocks/procedures.js"></script>
+  <script src="./libs/blockly/blocks/text.js"></script>
+  <script src="./libs/blockly/blocks/variables.js"></script>
+  <script src="./libs/blockly/blocks/variables_dynamic.js"></script>
+  <script src="./libs/blockly/blocks/inputOutput.js"></script>
+
+  <!-- the application menu -->
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn">Fichier</button>
+      <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Édition</button>
+      <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Affichage</button>
+      <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </div>
+  </nav>
+
+  <xml id="toolbox" style="display: none">
+    <category name=" Input">
+      <block type="input_downloadTextFile"></block>
+      <block type="input_loadTextFile"></block>
+    </category>
+    <category name="Output">
+      <block type="output_writeTextFile"></block>
+      <block type="output_writeImgFile"></block>
+    </category>
+
+    <sep gap="8"></sep>
+
+    <category name="Variables">
+      <block type="variables_get_dynamic"></block>
+    </category>
+    <category name="Lists">
+      <block type="lists_create_with_container"></block>
+      <block type="lists_create_with_item"></block>
+      <block type="lists_indexOf"></block>
+      <block type="lists_getIndex"></block>
+      <block type="lists_setIndex"></block>
+      <block type="lists_sort"></block>
+      <block type="lists_split"></block>
+    </category>
+
+    <sep gap="8"></sep>
+
+    <category name="maths">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="math_single"></block>
+      <block type="math_trig"></block>
+      <block type="math_constant"></block>
+      <block type="math_number_property"></block>
+      <block type="math_change"></block>
+      <block type="math_round"></block>
+      <block type="math_on_list"></block>
+      <block type="math_modulo"></block>
+      <block type="math_constrain"></block>
+      <block type="math_random_int"></block>
+      <block type="math_random_float"></block>
+      <block type="math_atan2"></block>
+    </category>
+
+    <sep gap="8"></sep>
+
+    <category name="Logic">
+      <block type="controls_if"></block>
+      <block type="controls_ifelse"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="loops">
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for"></block>
+      <block type="controls_repeat_ext"></block>
+      <block type="controls_repeat"></block>
+      <block type="controls_forEach"></block>
+    </category>
+    <category name="function">
+      <block type="procedures_defnoreturn"></block>
+      <block type="procedures_defreturn"></block>
+      <block type="procedures_mutatorcontainer"></block>
+      <block type="procedures_mutatorarg"></block>
+      <block type="procedures_callnoreturn"></block>
+      <block type="procedures_callreturn"></block>
+      <block type="procedures_ifreturn"></block>
+    </category>
+
+    <sep gap="8"></sep>
+
+    <category name="text">
+      <block type="text_getSubstring"></block>
+      <block type="text_changeCase"></block>
+      <block type="text_trim"></block>
+      <block type="text_print"></block>
+      <block type="text_prompt_ext"></block>
+      <block type="text_prompt"></block>
+      <block type="text_count"></block>
+      <block type="text_replace"></block>
+      <block type="text_reverse"></block>
+    </category>
+    <category name="Colours">
+      <block type="colour_picker"></block>
+      <block type="colour_rgb"></block>
+      <block type="colour_random"></block>
+      <block type="colour_blend"></block>
+    </category>
+  </xml>
+
   <div class="wrapper">
-    <div id="draghandleRight" class="draghandle-right" onmousedown="sideMove='right'; initResize(event);"></div>
-    <div id="sidebarRight" class="sidebar-right" style="left:75%; width: 35%;">
-      <!--
-       /// write thisDiv.innerHTML with :
-       <img src=""> OR
-       <table>CSV</table> OR
-       <pre>JSON</pre> OR
-       <form>Distant API</form>
-    -->
+    <div id="editorView" class="editorView">
+      <div id="blocklyTab" class="tabcontent">
+        <div id="blocklyDiv" style="position: absolute;"></div>
+      </div>
+
+      <div id="textEditorTab" class="tabcontent">
+        <h1>text editor</h1>
+        <h1>text editor</h1>
+        <h1>text editor</h1>
+      </div>
+
+      <button class="tablink" onclick="openTab('blocklyTab', this, 'dodgerblue')" id="defaultOpen">Blockly</button>
+      <button class="tablink" onclick="openTab('textEditorTab', this, 'dodgerblue')">Text Editor</button>
     </div>
 
-    <script src="./libs/blockly/closure/goog/base.js"></script>
-    <script src="./libs/blockly/blockly_compressed.js"></script>
-    <script src="./libs/blockly/msg/js/en.js"></script>
+    <div id="draghandle" class="draghandle" onmousedown="initResize(event);"></div>
 
-    <script src="./libs/blockly/blocks/colour.js"></script>
-    <script src="./libs/blockly/blocks/lists.js"></script>
-    <script src="./libs/blockly/blocks/logic.js"></script>
-    <script src="./libs/blockly/blocks/loops.js"></script>
-    <script src="./libs/blockly/blocks/math.js"></script>
-    <script src="./libs/blockly/blocks/procedures.js"></script>
-    <script src="./libs/blockly/blocks/text.js"></script>
-    <script src="./libs/blockly/blocks/variables.js"></script>
-    <script src="./libs/blockly/blocks/variables_dynamic.js"></script>
-    <script src="./libs/blockly/blocks/inputOutput.js"></script>
+    <div id="plotView" class="plotView">
+      <h1>plot</h1>
+      <h1>plot</h1>
+      <h1>plot</h1>
 
-    <xml id="toolbox" style="display: none">
-      <category name=" Input">
-        <block type="input_downloadTextFile"></block>
-        <block type="input_loadTextFile"></block>
-      </category>
-      <category name="Output">
-        <block type="output_writeTextFile"></block>
-        <block type="output_writeImgFile"></block>
-      </category>
-
-      <sep gap="8"></sep>
-
-      <category name="Variables">
-        <block type="variables_get_dynamic"></block>
-      </category>
-      <category name="Lists">
-        <block type="lists_create_with_container"></block>
-        <block type="lists_create_with_item"></block>
-        <block type="lists_indexOf"></block>
-        <block type="lists_getIndex"></block>
-        <block type="lists_setIndex"></block>
-        <block type="lists_sort"></block>
-        <block type="lists_split"></block>
-      </category>
-
-      <sep gap="8"></sep>
-
-      <category name="maths">
-        <block type="math_number"></block>
-        <block type="math_arithmetic"></block>
-        <block type="math_single"></block>
-        <block type="math_trig"></block>
-        <block type="math_constant"></block>
-        <block type="math_number_property"></block>
-        <block type="math_change"></block>
-        <block type="math_round"></block>
-        <block type="math_on_list"></block>
-        <block type="math_modulo"></block>
-        <block type="math_constrain"></block>
-        <block type="math_random_int"></block>
-        <block type="math_random_float"></block>
-        <block type="math_atan2"></block>
-      </category>
-
-      <sep gap="8"></sep>
-
-      <category name="Logic">
-        <block type="controls_if"></block>
-        <block type="controls_ifelse"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-        <block type="logic_boolean"></block>
-        <block type="logic_negate"></block>
-        <block type="logic_null"></block>
-        <block type="logic_ternary"></block>
-      </category>
-      <category name="loops">
-        <block type="controls_whileUntil"></block>
-        <block type="controls_for"></block>
-        <block type="controls_repeat_ext"></block>
-        <block type="controls_repeat"></block>
-        <block type="controls_forEach"></block>
-      </category>
-      <category name="function">
-        <block type="procedures_defnoreturn"></block>
-        <block type="procedures_defreturn"></block>
-        <block type="procedures_mutatorcontainer"></block>
-        <block type="procedures_mutatorarg"></block>
-        <block type="procedures_callnoreturn"></block>
-        <block type="procedures_callreturn"></block>
-        <block type="procedures_ifreturn"></block>
-      </category>
-
-      <sep gap="8"></sep>
-
-      <category name="text">
-        <block type="text_getSubstring"></block>
-        <block type="text_changeCase"></block>
-        <block type="text_trim"></block>
-        <block type="text_print"></block>
-        <block type="text_prompt_ext"></block>
-        <block type="text_prompt"></block>
-        <block type="text_count"></block>
-        <block type="text_replace"></block>
-        <block type="text_reverse"></block>
-      </category>
-      <category name="Colours">
-        <block type="colour_picker"></block>
-        <block type="colour_rgb"></block>
-        <block type="colour_random"></block>
-        <block type="colour_blend"></block>
-      </category>
-    </xml>
-
-    <div id="blocklyContainerID" class="blocklyContainer">
-      <div id="blocklyDiv" style="position: absolute;"></div>
+      <button class="tablink lonelyTab">Plot</button>
     </div>
-
-    <script>
-      var options = {
-        toolbox: toolbox,
-        collapse: true,
-        comments: true,
-        disable: false,
-        maxBlocks: Infinity,
-        trashcan: false,
-        horizontalLayout: false,
-        toolboxPosition: 'start',
-        css: true,
-        media: 'https://blockly-demo.appspot.com/static/media/',
-        rtl: false,
-        scrollbars: true,
-        sounds: true,
-        oneBasedIndex: true,
-        zoom: {
-          controls: true,
-          wheel: true,
-          startScale: 1,
-          maxScale: 3,
-          minScale: 0.3,
-          scaleSpeed: 1.2
-        }
-      };
-
-      var workspace = Blockly.inject(blocklyDiv, options);
-
-      let onresize = function (e) {
-        var blocklyContainer = document.getElementById('blocklyContainerID');
-        var blocklyDiv = document.getElementById('blocklyDiv');
-        var sidebarLeft = document.getElementById("sidebarLeft");
-        var sidebarRight = document.getElementById("sidebarRight");
-
-        // Position blocklyDiv over blocklyContainer.
-        blocklyDiv.style.left = '0px';
-        blocklyDiv.style.top = '0px';
-        blocklyDiv.style.width = "100%";
-        blocklyDiv.style.height = "100%";
-        Blockly.svgResize(workspace);
-      };
-
-      window.addEventListener('resize', onresize, false);
-    </script>
-    <script src="index.js"></script>
   </div>
-</body>
 
+  <script src="blockly.js"></script>
+  <script src="index.js"></script>
+  <script>window.addEventListener('resize', onresize, false);</script>
+</body>
 </html>
