@@ -1,5 +1,5 @@
 ////////////////// pan management //////////////////////////////
-function onresize(e) {
+function blocklyResize(e) {
   var blocklyDiv = document.getElementById('blocklyDiv');
 
   // Position blocklyDiv over blocklyContainer
@@ -21,7 +21,7 @@ function barsInitialPlacement() {
   draghandle.style.left = diptychWidth + "px";
   plotPan.style.left = diptychWidth + "px";
   plotPan.style.width = diptychWidth + "px";
-  onresize();
+  blocklyResize();
 }
 
 function initResize(e) {
@@ -30,7 +30,7 @@ function initResize(e) {
 }
 
 function Resize(e) {
-  onresize();
+  blocklyResize();
 
   var scriptPan = document.getElementById("editorView");
   var plotPan = document.getElementById("plotView");
@@ -45,11 +45,10 @@ function Resize(e) {
   }
 
 function stopResize(e) {
-  onresize();
+  blocklyResize();
   window.removeEventListener("mousemove", Resize, false);
   window.removeEventListener("mouseup", stopResize, false);
 }
-
 
 ////////////// tab management /////////////////
 
