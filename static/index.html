@@ -12,7 +12,7 @@
   <div class="wrapper">
     <div id="draghandleRight" class="draghandle-right" onmousedown="sideMove='right'; initResize(event);"></div>
     <div id="sidebarRight" class="sidebar-right" style="left:75%; width: 35%;">
-    <!--
+      <!--
        /// write thisDiv.innerHTML with :
        <img src=""> OR
        <table>CSV</table> OR
@@ -39,9 +39,11 @@
     <xml id="toolbox" style="display: none">
       <category name=" Input">
         <block type="input_downloadTextFile"></block>
+        <block type="input_loadTextFile"></block>
       </category>
       <category name="Output">
-        <block type="colour_picker"></block>
+        <block type="output_writeTextFile"></block>
+        <block type="output_writeImgFile"></block>
       </category>
 
       <sep gap="8"></sep>
@@ -129,54 +131,55 @@
     </xml>
 
     <div id="blocklyContainerID" class="blocklyContainer">
-        <div id="blocklyDiv" style="position: absolute;"></div>
+      <div id="blocklyDiv" style="position: absolute;"></div>
     </div>
 
     <script>
       var options = {
-    	toolbox : toolbox,
-	    collapse : true,
-	    comments : true,
-	    disable : false,
-	    maxBlocks : Infinity,
-	    trashcan : false,
-	    horizontalLayout : false,
-	    toolboxPosition : 'start',
-	    css : true,
-	    media : 'https://blockly-demo.appspot.com/static/media/',
-	    rtl : false,
-	    scrollbars : true,
-	    sounds : true,
-	    oneBasedIndex : true,
-	    zoom : {
-		  controls : true,
-		  wheel : true,
-		  startScale : 1,
-		  maxScale : 3,
-		  minScale : 0.3,
-		  scaleSpeed : 1.2
-	    }
+        toolbox: toolbox,
+        collapse: true,
+        comments: true,
+        disable: false,
+        maxBlocks: Infinity,
+        trashcan: false,
+        horizontalLayout: false,
+        toolboxPosition: 'start',
+        css: true,
+        media: 'https://blockly-demo.appspot.com/static/media/',
+        rtl: false,
+        scrollbars: true,
+        sounds: true,
+        oneBasedIndex: true,
+        zoom: {
+          controls: true,
+          wheel: true,
+          startScale: 1,
+          maxScale: 3,
+          minScale: 0.3,
+          scaleSpeed: 1.2
+        }
       };
 
-       var workspace = Blockly.inject(blocklyDiv, options);
+      var workspace = Blockly.inject(blocklyDiv, options);
 
-         let onresize = function (e) {
-            var blocklyContainer = document.getElementById('blocklyContainerID');
-            var blocklyDiv = document.getElementById('blocklyDiv');
-            var sidebarLeft = document.getElementById("sidebarLeft");
-            var sidebarRight = document.getElementById("sidebarRight");
+      let onresize = function (e) {
+        var blocklyContainer = document.getElementById('blocklyContainerID');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var sidebarLeft = document.getElementById("sidebarLeft");
+        var sidebarRight = document.getElementById("sidebarRight");
 
-            // Position blocklyDiv over blocklyContainer.
-            blocklyDiv.style.left = '0px';
-            blocklyDiv.style.top = '0px';
-            blocklyDiv.style.width = "100%";
-            blocklyDiv.style.height = "100%";
-            Blockly.svgResize(workspace);
-         };
+        // Position blocklyDiv over blocklyContainer.
+        blocklyDiv.style.left = '0px';
+        blocklyDiv.style.top = '0px';
+        blocklyDiv.style.width = "100%";
+        blocklyDiv.style.height = "100%";
+        Blockly.svgResize(workspace);
+      };
 
-         window.addEventListener('resize', onresize, false);
+      window.addEventListener('resize', onresize, false);
     </script>
     <script src="index.js"></script>
   </div>
 </body>
+
 </html>

@@ -21,7 +21,7 @@ public class init {
 
         CefClient client = myApp.createClient();
 
-        Path clientPath = Paths.get("static/index.html");
+        Path clientPath = Paths.get("static/helloWorld/index.html");
         final CefBrowser browser = client.createBrowser(clientPath.toAbsolutePath().toString(), true, false);
         final Component browserUI = browser.getUIComponent();
         window.add(browserUI);

@@ -7,28 +7,6 @@
   padding-top: 0;
 }
 
-.sidebar-left {
-  position: fixed;
-  height: 100%;
-  top: 0;
-  padding-left: 2px;
-  padding-right: 5px;
-  vertical-align: middle;
-  border-style: none;
-  z-index: 0;
-  background-color: dodgerblue;
-}
-
-.draghandle-left {
-  position: absolute;
-  width: 8px;
-  height: 110%;
-  top: 0;
-  cursor: col-resize;
-  z-index: 5;
-  background-color: gold;
-}
-
 .blocklyContainer {
   position: fixed;
   top: 0;
