@@ -1,68 +1,88 @@
 ////////////////// pan management //////////////////////////////
-function blocklyResize(e) {
-  var blocklyDiv = document.getElementById('blocklyDiv');
+const scriptPan = document.getElementById("editorView");
+const draghandle = document.getElementById("draghandle");
+const plotPan = document.getElementById("plotView");
+const blocklyDiv = document.getElementById('blocklyDiv');
+const tabcontent = document.getElementsByClassName("tabcontent");
+const tablinks = document.getElementsByClassName("tablink");
+const navBar = document.getElementById('navBar');
+
+function initialPlacement() {
+  var diptychWidth = window.innerWidth / 2;
+
+  scriptPan.style.left = "0px";
+  scriptPan.style.width = diptychWidth + "px";
+  scriptPan.style.height = window.innerHeight-navBar.offsetHeight+"px";
+  scriptPan.style.top = navBar.offsetHeight + "px";
+  
+  draghandle.style.left = diptychWidth + "px";
+  draghandle.style.height = window.innerHeight - navBar.offsetHeight+"px";
+  draghandle.style.top = navBar.offsetHeight + "px";
+
+  plotPan.style.left = diptychWidth + "px";
+  plotPan.style.width = diptychWidth + "px";
+  plotPan.style.height = window.innerHeight - navBar.offsetHeight+"px";
+  plotPan.style.top = navBar.offsetHeight + "px";
 
   // Position blocklyDiv over blocklyContainer
   blocklyDiv.style.left = '0px';
   blocklyDiv.style.top = '0px';
   blocklyDiv.style.width = "100%";
-  blocklyDiv.style.height = "100%";
+  blocklyDiv.style.height = window.innerHeight - navBar.offsetHeight+"px";
   Blockly.svgResize(workspace);
-};
-
-function barsInitialPlacement() {
-  var scriptPan = document.getElementById("editorView");
-  var draghandle = document.getElementById("draghandle");
-  var plotPan = document.getElementById("plotView");
-  var diptychWidth = window.innerWidth / 2;
-
-  scriptPan.style.left = "0px";
-  scriptPan.style.width = diptychWidth + "px";
-  draghandle.style.left = diptychWidth + "px";
-  plotPan.style.left = diptychWidth + "px";
-  plotPan.style.width = diptychWidth + "px";
-  blocklyResize();
 }
 
-function initResize(e) {
-  window.addEventListener("mousemove", Resize, false);
-  window.addEventListener("mouseup", stopResize, false);
+///////////// the pan resize ///////////////////
+
+function initPanResize(e) {
+  window.addEventListener("mousemove", dragHandlePanResize, false);
+  window.addEventListener("mouseup", stopPanResize, false);
 }
 
-function Resize(e) {
-  blocklyResize();
+function stopPanResize(e) {
+  window.removeEventListener("mousemove", dragHandlePanResize, false);
+  window.removeEventListener("mouseup", stopPanResize, false);
+}
 
-  var scriptPan = document.getElementById("editorView");
-  var plotPan = document.getElementById("plotView");
+function dragHandlePanResize(e) {
   plotPan.style.left = e.clientX + "px";
   plotPan.style.width = window.innerWidth - e.clientX + "px";
   draghandle.style.left = e.clientX + "px";
+  scriptPan.style.width =  parseInt(window.innerWidth, 10) - ( parseInt(plotPan.style.width, 10) ) + "px";
 
-  scriptPan.style.width = parseInt(window.innerWidth, 10)
-    - (
-      parseInt(plotPan.style.width, 10)
-      ) + "px";
-  }
-
-function stopResize(e) {
-  blocklyResize();
-  window.removeEventListener("mousemove", Resize, false);
-  window.removeEventListener("mouseup", stopResize, false);
+  // Reposition blocklyDiv over blocklyContainer
+  blocklyDiv.style.left = '0px';
+  blocklyDiv.style.width = "100%";
+  Blockly.svgResize(workspace);    
 }
 
-////////////// tab management /////////////////
+/////////////// the window resize ///////////////////////
 
+function windowResize(e) {
+  const diptychWidth = window.innerWidth / 2;
+
+  scriptPan.style.left = "0px";
+  scriptPan.style.width = diptychWidth + "px";
+  scriptPan.style.height = window.innerHeight - navBar.offsetHeight+"px"; 
+
+  draghandle.style.left = diptychWidth + "px";
+  draghandle.style.height = window.innerHeight - navBar.offsetHeight+"px"; 
+
+  plotPan.style.left = diptychWidth + "px";
+  plotPan.style.width = diptychWidth + "px";
+  plotPan.style.height = window.innerHeight - navBar.offsetHeight+"px";
+
+  blocklyDiv.style.height = window.innerHeight - navBar.offsetHeight+"px";
+  Blockly.svgResize(workspace);    
+}
+
+////////////// the tab management /////////////////
 function openTab(tabID, element, color) {
-  // Hide all elements with class="tabcontent" by default */
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
+  for (let i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
 
-  // Remove the background color of all tablinks/buttons
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
+  for (let i = 0; i < tablinks.length; i++) {
     tablinks[i].style.backgroundColor = "";
   }
 
@@ -70,5 +90,5 @@ function openTab(tabID, element, color) {
   element.style.backgroundColor = color;
 }
 
-// Get the element with id="defaultOpen" and click on it
+// activate the defaultOpen to launch the machinery
 document.getElementById("defaultOpen").click();

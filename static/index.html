@@ -7,7 +7,7 @@
   <title>DataScience accelerator</title>
 </head>
 
-<body onload="barsInitialPlacement()">
+<body onload="initialPlacement()">
   <script src="./libs/blockly/closure/goog/base.js"></script>
   <script src="./libs/blockly/blockly_compressed.js"></script>
   <script src="./libs/blockly/msg/js/en.js"></script>
@@ -24,7 +24,7 @@
   <script src="./libs/blockly/blocks/inputOutput.js"></script>
 
   <!-- the application menu -->
-  <nav>
+  <nav id="navBar">
     <div class="dropdown">
       <button class="dropbtn">Fichier</button>
       <div class="dropdown-content">
@@ -145,36 +145,38 @@
     </category>
   </xml>
 
-  <div class="wrapper">
-    <div id="editorView" class="editorView">
-      <div id="blocklyTab" class="tabcontent">
-        <div id="blocklyDiv" style="position: absolute;"></div>
-      </div>
+  <div id="editorView" class="editorView">
+    <div id="blocklyTab" class="tabcontent">
+      <div id="blocklyDiv" style="position: absolute;"></div>
+    </div>
 
-      <div id="textEditorTab" class="tabcontent">
-        <h1>text editor</h1>
-        <h1>text editor</h1>
-        <h1>text editor</h1>
-      </div>
+    <div id="textEditorTab" class="tabcontent">
+      <h1>text editor</h1>
+      <h1>text editor</h1>
+      <h1>text editor</h1>
+    </div>
 
+    <div class="tabContainer">
       <button class="tablink" onclick="openTab('blocklyTab', this, 'dodgerblue')" id="defaultOpen">Blockly</button>
       <button class="tablink" onclick="openTab('textEditorTab', this, 'dodgerblue')">Text Editor</button>
     </div>
+  </div>
 
-    <div id="draghandle" class="draghandle" onmousedown="initResize(event);"></div>
+  <div id="draghandle" class="draghandle" onmousedown="initPanResize(event);"></div>
 
-    <div id="plotView" class="plotView">
-      <h1>plot</h1>
-      <h1>plot</h1>
-      <h1>plot</h1>
+  <div id="plotView" class="plotView">
+    <h1>plot</h1>
+    <h1>plot</h1>
+    <h1>plot</h1>
 
+    <div class="tabContainer">
       <button class="tablink lonelyTab">Plot</button>
     </div>
   </div>
 
   <script src="blockly.js"></script>
   <script src="index.js"></script>
-  <script>window.addEventListener('resize', blocklyResize, false);</script>
+  <script>window.addEventListener('resize', windowResize, false);</script>
 </body>
 
 </html>

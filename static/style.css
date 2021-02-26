@@ -1,14 +1,12 @@
 body {
   margin: 0;
-  overflow: hidden;
 }
 
 /* //////////////////// the menu styling  /////////////////////// */
 nav {
   overflow: hidden;
-  background-color: #66ccff;
+  background-color: #555;
   font-family: Arial;
-  border-bottom: 4px solid yellow;
 }
 
 /* Links inside the navbar */
@@ -32,7 +30,7 @@ nav a {
   font-size: 16px;
   border: none;
   outline: none;
-  color: black;
+  color: white;
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;  /* Important for vertical align on mobile phones */
@@ -41,7 +39,7 @@ nav a {
 
 nav a:hover,
 .dropdown:hover .dropbtn {
-  color: yellow;
+  color: gold;
   background-color: dodgerblue;
   font-weight: bold;
 }
@@ -77,26 +75,15 @@ nav a:hover,
 
 /* ///////////// the pane styling ////////////////// */
 
-.wrapper {
-  min-height: 100vh;
-  width: 100%;
-  height: 100%;
-  table-layout: fixed;
-  overflow: hidden;
-  padding-top: 0;
-}
-
 .blocklyContainer {
-  position: fixed;
-  top: 0;
+  bottom: 0;
   height: 100%;
 }
 
 .draghandle {
   position: absolute;
   width: 8px;
-  height: 110%;
-  /* top: 0; */
+  bottom: 0%;
   cursor: col-resize;
   z-index: 5;
   background-color: gold;
@@ -106,7 +93,7 @@ nav a:hover,
   position: absolute;
   display: inline-block;
   width: 50%;
-  height: 100%;
+  bottom: 0%;
   left: 0px;
   background-color: whitesmoke;
 }
@@ -118,8 +105,15 @@ nav a:hover,
   text-align: center;
   width: 50%;
   right: 0px;
+  bottom:0%;
   z-index: 2;
   background-color: #66ccff;
+}
+
+.tabContainer {
+  position: absolute;
+  bottom:0%;
+  width:100%;
 }
 
 /* //////////////////// the tab styling  /////////////////////// */
@@ -136,17 +130,21 @@ nav a:hover,
   padding-bottom: 4px;
   font-size: 17px;
   width: 50%;
+  /* prevent the user to select the title of the windows */
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                              supported by Chrome, Edge, Opera and Firefox */
 }
 
 .tablink:hover {
   background-color: #777;
 }
 
-.lonelyTab {
-  background-color: dodgerblue;
-}
-
-.lonelyTab:hover {
+.lonelyTab, .lonelyTab:hover {
   background-color: dodgerblue;
 }
 
