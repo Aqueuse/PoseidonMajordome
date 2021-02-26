@@ -6,6 +6,7 @@ const blocklyDiv = document.getElementById('blocklyDiv');
 const tabcontent = document.getElementsByClassName("tabcontent");
 const tablinks = document.getElementsByClassName("tablink");
 const navBar = document.getElementById('navBar');
+const dropdown = document.querySelector('.dropdown');
 
 function initialPlacement() {
   var diptychWidth = window.innerWidth / 2;
@@ -14,7 +15,7 @@ function initialPlacement() {
   scriptPan.style.width = diptychWidth + "px";
   scriptPan.style.height = window.innerHeight-navBar.offsetHeight+"px";
   scriptPan.style.top = navBar.offsetHeight + "px";
-  
+
   draghandle.style.left = diptychWidth + "px";
   draghandle.style.height = window.innerHeight - navBar.offsetHeight+"px";
   draghandle.style.top = navBar.offsetHeight + "px";
@@ -28,12 +29,12 @@ function initialPlacement() {
   blocklyDiv.style.left = '0px';
   blocklyDiv.style.top = '0px';
   blocklyDiv.style.width = "100%";
-  blocklyDiv.style.height = window.innerHeight - navBar.offsetHeight+"px";
+  blocklyDiv.style.height = window.innerHeight
+    - (navBar.offsetHeight+dropdown.offsetHeight)+"px";
   Blockly.svgResize(workspace);
 }
 
 ///////////// the pan resize ///////////////////
-
 function initPanResize(e) {
   window.addEventListener("mousemove", dragHandlePanResize, false);
   window.addEventListener("mouseup", stopPanResize, false);
@@ -57,7 +58,6 @@ function dragHandlePanResize(e) {
 }
 
 /////////////// the window resize ///////////////////////
-
 function windowResize(e) {
   const diptychWidth = window.innerWidth / 2;
 
@@ -72,7 +72,8 @@ function windowResize(e) {
   plotPan.style.width = diptychWidth + "px";
   plotPan.style.height = window.innerHeight - navBar.offsetHeight+"px";
 
-  blocklyDiv.style.height = window.innerHeight - navBar.offsetHeight+"px";
+  blocklyDiv.style.height = window.innerHeight
+    - (navBar.offsetHeight+dropdown.offsetHeight)+"px";
   Blockly.svgResize(workspace);    
 }
 
