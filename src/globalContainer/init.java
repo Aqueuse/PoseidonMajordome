@@ -2,6 +2,8 @@ package globalContainer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 
 import org.cef.CefApp;
@@ -10,30 +12,30 @@ import org.cef.CefSettings;
 import org.cef.browser.CefBrowser;
 
 public class init {
+    static CefSettings mySettings = new CefSettings();
+    static CefApp myApp = CefApp.getInstance(mySettings);
+    static CefClient client = myApp.createClient();
+
+    static JFrame windowApp = new JFrame();
+
     public static void main(String[] args) throws IOException, InterruptedException {
+        CefBrowser browser = client.createBrowser("http://localhost:3003/static", true, false);
+        Component applicationScreen = browser.getUIComponent();
+        windowApp.add(applicationScreen);
 
-        // start the nodeJS server and wait for a good response
-        NodeJS.startNodeServer();
+        windowApp.setSize(1200, 800);
+        windowApp.setLocationRelativeTo(null);
+        windowApp.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        windowApp.setVisible(true);
 
-        /// while it's loading, so a start image with poseidon logo
-
-        // open a chromium browser (CEF) and show the starting page
-        final CefSettings mySettings = new CefSettings();
-        final CefApp myApp = CefApp.getInstance(mySettings);
-
-        JFrame window = new JFrame();
-
-        CefClient client = myApp.createClient();
-
-        final CefBrowser browser = client.createBrowser("http://localhost:3003/static", true, false);
-        final Component browserUI = browser.getUIComponent();
-        window.add(browserUI);
-
-        window.setSize(1200, 800);
-        window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        window.setVisible(true);
-
-
+        windowApp.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                int i = JOptionPane.showConfirmDialog(null,
+                        "are you sure ?", "are you sure ?", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 }
