@@ -1,4 +1,4 @@
-![logo](https://github.com/Aqueuse/PoseidonMajordome/blob/main/static/mascott_without_letters.png)
+![logo](https://github.com/Aqueuse/PoseidonMajordome/blob/main/nodejs/static/mascott_without_letters.png)
 
 # PoseidonMajordome
 DataScience API generator : connect to any API, analyze the results with your favorite language (Python, R, Java, JavaScript) and save time and space with MongoDB. All-in-one solution.
