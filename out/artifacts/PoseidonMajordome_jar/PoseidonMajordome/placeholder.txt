@@ -1,1 +1,0 @@
-placeholder for git - can be removed when containing real assets for tests
