@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+}
+
+/* //////////////////// the menu styling  /////////////////////// */
+nav {
+  overflow: hidden;
+  background-color: #555;
+  font-family: Arial;
+}
+
+/* Links inside the navbar */
+nav a {
+  float: left;
+  font-size: 16px;
+  color: darkblue;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;  /* Important for vertical align on mobile phones */
+  margin: 0;  /* Important for vertical align on mobile phones */
+}
+
+nav a:hover,
+.dropdown:hover .dropbtn {
+  color: gold;
+  background-color: dodgerblue;
+  font-weight: bold;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #66ccff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: darkblue;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: dodgerblue;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ///////////// the pane styling ////////////////// */
+
+.draghandle {
+  position: absolute;
+  width: 8px;
+  bottom: 0%;
+  cursor: col-resize;
+  z-index: 5;
+  background-color: gold;
+}
+
+.editorView {
+  position: absolute;
+  display: inline-block;
+  width: 50%;
+  bottom: 0%;
+  left: 0px;
+  background-color: whitesmoke;
+}
+
+.textEditorArea {
+    border: none;
+    outline: none;
+    overflow: auto;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.plotView {
+  position: absolute;
+  display: inline-block;
+  color: black;
+  text-align: center;
+  width: 50%;
+  right: 0px;
+  bottom:0%;
+  z-index: 2;
+  background-color: #66ccff;
+}
+
+.tabContainer {
+  position: absolute;
+  bottom:0%;
+  width:100%;
+}
+
+/* //////////////////// the tab styling  /////////////////////// */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding-left: 14px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 17px;
+  width: 50%;
+  /* prevent the user to select the title of the windows */
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                              supported by Chrome, Edge, Opera and Firefox */
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+.lonelyTab, .lonelyTab:hover {
+  background-color: dodgerblue;
+}
+
+.tabcontent {
+  color: black;
+  display: none;
+  text-align: center;
+  width: 50%;
+}
