@@ -114,6 +114,16 @@ nav a:hover,
   background-color: #66ccff;
 }
 
+.plotDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  background-color: #c4dcff;
+}
+
 .tabContainer {
   position: absolute;
   bottom:0%;

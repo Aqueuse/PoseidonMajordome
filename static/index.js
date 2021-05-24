@@ -4,7 +4,6 @@ const scriptTextArea = document.querySelector('.textEditorArea');
 const draghandle = document.getElementById("draghandle");
 const plotPan = document.getElementById("plotView");
 const blocklyDiv = document.getElementById('blocklyDiv');
-const tabcontent = document.getElementsByClassName("tabcontent");
 const tablinks = document.getElementsByClassName("tablink");
 const navBar = document.getElementById('navBar');
 const dropdown = document.querySelector('.dropdown');
@@ -105,5 +104,21 @@ function openTab(tabID, element, color) {
   element.style.backgroundColor = color;
 }
 
-// activate the defaultOpen to launch the machinery
-document.getElementById("defaultOpen").click();
+function switchTab(containerID, tabIDToShow, activeTab, color) {
+  const container = document.getElementById(containerID);
+
+  //boucle display tab to hide the others exept the tab container
+  for (let i = 0; i < container.children.length-1; i++) {
+    container.children.item(i).style.display = "none";
+  }
+  document.getElementById(tabIDToShow).style.display = "block";
+
+  //boucle color tablink to uncolor the others
+  for (let i = 0; i < activeTab.parentElement.children.length; i++) {
+      activeTab.parentElement.children.item(i).style.backgroundColor = "";
+  }
+  activeTab.style.backgroundColor = color;
+}
+
+document.getElementById("plotView").getElementsByTagName('button').item(1).click();
+document.getElementById("editorView").getElementsByTagName('button').item(0).click();

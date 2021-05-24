@@ -28,25 +28,33 @@
     <div class="dropdown">
       <button class="dropbtn">Fichier</button>
       <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <a>New project ...</a>
+        <a onclick="retrieve_json_tree()">Open project</a>
+        <a onclick="retrieve_json_tree()">Refresh Project directory</a>
       </div>
     </div>
     <div class="dropdown">
       <button class="dropbtn">Édition</button>
       <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <a>Link 1</a>
+        <a>Link 2</a>
+        <a>Link 3</a>
       </div>
     </div>
     <div class="dropdown">
       <button class="dropbtn">Affichage</button>
       <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <a>Link 1</a>
+        <a>Link 2</a>
+        <a>Link 3</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Run</button>
+      <div class="dropdown-content">
+        <a onclick="retrieve_data()">Run the script ...</a>
+        <a>Link 2</a>
+        <a>Link 3</a>
       </div>
     </div>
   </nav>
@@ -152,31 +160,38 @@
     </div>
 
     <div id="textEditorTab" class="tabcontent" style="width: 98%; height: 100%">
-      <form action='POST'>
         <textarea class="textEditorArea" style="border-width:0px"></textarea>
-      </form>
     </div>
 
     <div class="tabContainer">
-      <button class="tablink" onclick="openTab('blocklyTab', this, 'dodgerblue')" id="defaultOpen">Blockly</button>
-      <button class="tablink" onclick="openTab('textEditorTab', this, 'dodgerblue')">Text Editor</button>
+      <button class="tablink" onclick="switchTab('editorView', 'blocklyTab', this, 'dodgerblue')">Blockly</button>
+      <button class="tablink" onclick="switchTab('editorView', 'textEditorTab', this, 'dodgerblue')">Text Editor</button>
     </div>
   </div>
 
   <div id="draghandle" class="draghandle" onmousedown="initPanResize(event);"></div>
 
   <div id="plotView" class="plotView">
-    <h1>plot</h1>
-    <h1>plot</h1>
-    <h1>plot</h1>
+    <div id="plotTab">
+      <div class="plotDiv">
+        <p id="plotContent" style="margin-left: 15px"></p>
+      </div>
+    </div>
+
+    <div id="navigatorTab">
+        <input type=file id="inputOpenFolder" webkitdirectory multiple style="display: none">
+    </div>
 
     <div class="tabContainer">
-      <button class="tablink lonelyTab">Plot</button>
+      <button class="tablink" onclick="switchTab('plotView', 'plotTab', this, 'dodgerblue')">Plot</button>
+      <button class="tablink" onclick="switchTab('plotView', 'navigatorTab', this, 'dodgerblue')">Navigator</button>
     </div>
   </div>
 
   <script src="{{baseURL}}/static/blockly.js"></script>
   <script src="{{baseURL}}/static/index.js"></script>
+  <script src="{{baseURL}}/static/rosetta.js"></script>
+  <script src="{{baseURL}}/static/libs/navigator/filesystem.js"></script>
   <script>window.addEventListener('resize', windowResize, false);</script>
 </body>
 
