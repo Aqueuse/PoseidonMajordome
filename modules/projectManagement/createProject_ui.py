@@ -1,36 +1,34 @@
 import sys
-from multiprocessing import Process
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 
 def create_dialog():
-    application = QtWidgets.QApplication(sys.argv)
-    new_window = QtWidgets.QWidget()
+    qt_application = QtWidgets.QApplication(sys.argv)
+    create_window = QtWidgets.QWidget()
+    create_window.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
 
-    application.setApplicationName("Create a project")
-    new_window.setGeometry(200, 200, 600, 600)
+    screen_width = qt_application.primaryScreen().size().width()
+    screen_height = qt_application.primaryScreen().size().height()
 
-    select_folder_button = QtWidgets.QPushButton('choose ...', new_window)
+    qt_application.setApplicationName("Create a project")
+    create_window.setGeometry((screen_width/2)-300, (screen_height/2)-300, 600, 600)
+
+    select_folder_button = QtWidgets.QPushButton('choose ...', create_window)
     select_folder_button.clicked.connect(open_file_explorer)
     # path_validation = QTextEdit(self)
 
-    close_button = QtWidgets.QPushButton('ok', new_window)
-    close_button.clicked.connect(lambda: application.exit())
+    close_button = QtWidgets.QPushButton('ok', create_window)
+    close_button.clicked.connect(lambda: qt_application.exit())
 
     vertical_layout = QtWidgets.QVBoxLayout()
     vertical_layout.addWidget(select_folder_button)
     vertical_layout.addWidget(close_button)
 
-    new_window.setLayout(vertical_layout)
+    create_window.setLayout(vertical_layout)
 
-    new_window.show()
-    new_window.raise_()
-    sys.exit(application.exec_())
-
-
-def create():
-    pyqt_process = Process(target=create_dialog)
-    pyqt_process.start()
+    create_window.show()
+    create_window.raise_()
+    qt_application.exec_()
 
 
 def open_file_explorer():

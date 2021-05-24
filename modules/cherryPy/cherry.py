@@ -1,6 +1,7 @@
 import cherrypy
 from modules.rosetta import router
-from modules.projectManagement import createProject_ui
+from modules.processManagement import manager
+from modules.projectManagement import openProject_ui
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -40,9 +41,16 @@ def launcher(application_path, port):
                 return result
 
         @cherrypy.expose
-        def navigator(self):
+        def open(self):
             if cherrypy.request.method == "GET":
-                createProject_ui.create()
-                return 'plop'
+                manager.monitor('pyqt_open')
+                return openProject_ui.file_name
+                return 'plop from cherryPy'
+
+        @cherrypy.expose
+        def create(self):
+            if cherrypy.request.method == "GET":
+                manager.monitor('pyqt_create')
+                return 'create'
 
     cherrypy.quickstart(Root(), config=conf)

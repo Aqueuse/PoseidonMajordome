@@ -28,9 +28,9 @@
     <div class="dropdown">
       <button class="dropbtn">Fichier</button>
       <div class="dropdown-content">
-        <a>New project ...</a>
-        <a onclick="retrieve_json_tree()">Open project</a>
-        <a onclick="retrieve_json_tree()">Refresh Project directory</a>
+        <a onclick="create_project_fetch()">New project ...</a>
+        <a onclick="load_project_fetch()">Open project</a>
+        <a onclick="load_project_fetch()">Refresh Project directory</a>
       </div>
     </div>
     <div class="dropdown">
@@ -179,7 +179,6 @@
     </div>
 
     <div id="navigatorTab">
-        <input type=file id="inputOpenFolder" webkitdirectory multiple style="display: none">
     </div>
 
     <div class="tabContainer">
