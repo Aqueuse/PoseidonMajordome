@@ -1,4 +1,6 @@
 import os
+import signal
+
 from modules.processManagement import manager
 
 application_path = os.path.dirname(os.path.abspath(__file__))

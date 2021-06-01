@@ -1,15 +1,19 @@
+import json
 import cherrypy
+from jinja2 import Environment, FileSystemLoader
+
+import modules.filesystem
 from modules.rosetta import router
 from modules.processManagement import manager
 from modules.projectManagement import openProject_ui
-from jinja2 import Environment, FileSystemLoader
 
 
 def launcher(application_path, port):
     env = Environment(loader=FileSystemLoader('static'))
     conf = {
         'global': {
-            'server.socket_port': port
+            'server.socket_port': port,
+            'server.thread_pool': 30
         },
         '/': {
             'tools.staticdir.root': application_path
@@ -44,8 +48,8 @@ def launcher(application_path, port):
         def open(self):
             if cherrypy.request.method == "GET":
                 manager.monitor('pyqt_open')
-                return openProject_ui.file_name
-                return 'plop from cherryPy'
+                json_tree = json.dumps(modules.filesystem.make_tree(openProject_ui.file_name))
+                return json_tree
 
         @cherrypy.expose
         def create(self):

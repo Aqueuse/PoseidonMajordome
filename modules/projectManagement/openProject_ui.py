@@ -3,8 +3,10 @@ from PyQt5 import QtWidgets, QtCore
 
 file_name = ''
 
-def create_dialog():
+
+def open_dialog():
     qt_application = QtWidgets.QApplication(sys.argv)
+
     open_window = QtWidgets.QWidget()
     open_window.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
     open_window.setFocus()
@@ -19,7 +21,7 @@ def create_dialog():
     select_folder_button.clicked.connect(open_file_explorer)
 
     global path_validation
-    path_validation = QtWidgets.QTextEdit()
+    path_validation = QtWidgets.QLineEdit()
 
     close_button = QtWidgets.QPushButton('ok', open_window)
     close_button.clicked.connect(lambda: qt_application.exit())
@@ -31,13 +33,15 @@ def create_dialog():
 
     open_window.setLayout(vertical_layout)
 
+    print("initialisation ok")
     open_window.show()
     open_window.raise_()
-    qt_application.exec_()
-    return path_validation.toPlainText()
+    qt_application.exec()
+    print("application exec ok")
+    return path_validation.text()
 
 
 def open_file_explorer():
     global file_name
-    file_name = QtWidgets.QFileDialog.getOpenFileName(None, 'OpenFile')
+    file_name = QtWidgets.QFileDialog.getExistingDirectory(None, 'Open project folder ...')
     path_validation.setText(str(file_name))

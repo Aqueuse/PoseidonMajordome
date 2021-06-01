@@ -1,3 +1,6 @@
+import os
+
+
 def make_tree(path):
     tree = dict(name=os.path.basename(path), children=[])
     try:
@@ -11,5 +14,4 @@ def make_tree(path):
                 tree['children'].append(make_tree(fn))
             else:
                 tree['children'].append(dict(name=name))
-    print(json.dumps(tree))
     return tree
