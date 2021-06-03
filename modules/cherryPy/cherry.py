@@ -57,4 +57,12 @@ def launcher(application_path, port):
                 manager.monitor('pyqt_create')
                 return 'create'
 
+        @cherrypy.expose
+        def plot_img(self):
+            if cherrypy.request.method == "POST":
+                content_length = cherrypy.request.headers['Content-Length']
+                rawbody = cherrypy.request.body.read(int(content_length))
+                path = rawbody.decode('utf-8').split(' ')[0]
+                return modules.filesystem.check_file_return_log(path)
+
     cherrypy.quickstart(Root(), config=conf)

@@ -1,5 +1,4 @@
 import os
-import signal
 
 from modules.processManagement import manager
 
