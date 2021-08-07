@@ -107,13 +107,13 @@ function openTab(tabID, element, color) {
 function switchTab(containerID, tabIDToShow, activeTab, color) {
   const container = document.getElementById(containerID);
 
-  //boucle display tab to hide the others exept the tab container
+  //loop the tabs to hide the others except the tab container
   for (let i = 0; i < container.children.length-1; i++) {
     container.children.item(i).style.display = "none";
   }
   document.getElementById(tabIDToShow).style.display = "block";
 
-  //boucle color tablink to uncolor the others
+  //loop the tablink to uncolor the others
   for (let i = 0; i < activeTab.parentElement.children.length; i++) {
       activeTab.parentElement.children.item(i).style.backgroundColor = "";
   }

@@ -79,8 +79,7 @@ function plot_fetch(path) {
     let myInit = {
         method: 'POST',
         headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         },
         cache: 'default',
         body: path
