@@ -1,3 +1,0 @@
-[0527/150755.262:ERROR:broker_win.cc(134)] Error sending sync broker message: Le canal de communication est sur le point d’être fermé. (0xE8)
-[0527/150755.397:ERROR:broker_win.cc(134)] Error sending sync broker message: Le canal de communication est sur le point d’être fermé. (0xE8)
-[0601/110350.040:ERROR:broker_win.cc(57)] Error reading broker pipe: Le canal de communication a été fermé. (0x6D)
