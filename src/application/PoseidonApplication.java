@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import application.composants.LoggerTab;
+import application.composants.ApplicationMessages;
 import application.builders.ReadBuilder;
 import application.builders.RequestBuilder;
 import application.builders.WriteBuilder;
@@ -33,18 +33,15 @@ public class PoseidonApplication extends javafx.application.Application {
     public static Pane paneSettingsContainer = new Pane();
     public SplitPane globalVerticalSplitPane = new SplitPane();
 
-    public static TabPane paneMessages = new TabPane();
-    public static Tab applicationMessagesTab = new Tab();
-    public static TextArea applicationMessagesTextArea = new TextArea();
-    public static LoggerTab paneLogger = new LoggerTab();
-
-    HBox messagesHbox = new HBox();
     HBox hboxToolbar = new HBox();
     MenuItem menuItemAddReadFile = new MenuItem("add File read");
     MenuItem menuItemAddWriteFile = new MenuItem("add File Write");
     MenuItem menuItemAddLogger = new MenuItem("add Log");
     MenuItem menuItemAddRequest = new MenuItem("add Request");
     MenuItem menuItemExploreFishponds = new MenuItem("explore");
+
+    public static ApplicationMessages applicationMessages = new ApplicationMessages();
+
 
     public static List<RequestSettings> requestSettingsList = new ArrayList<>();
     public static List<ReaderSettings> readerSettingsList = new ArrayList<>();
@@ -111,13 +108,6 @@ public class PoseidonApplication extends javafx.application.Application {
 
         SplitPane rightHorizontalSplitPane = new SplitPane();
 
-        Pane applicationMessagesPane = new Pane();
-        applicationMessagesTab.setText("Poseidon messages");
-        applicationMessagesTextArea.setWrapText(true);
-        applicationMessagesTextArea.setEditable(false);
-        applicationMessagesTextArea.setPrefWidth(10000);
-        applicationMessagesTextArea.setPrefHeight(10000);
-
         stage.setTitle("Poseidon Majordome");
 
         globalVerticalSplitPane.setPrefHeight(initialStage);
@@ -126,8 +116,9 @@ public class PoseidonApplication extends javafx.application.Application {
         downFactoryButton.setGraphic(downView);
         runFactoriesButton.setGraphic(playView);
         rightHorizontalSplitPane.setOrientation(Orientation.VERTICAL);
-        messagesHbox.setPrefHeight(initialStage-paneSettingsContainer.getHeight());
-        LoggerTab.loggerHBOX.setPrefHeight(initialStage-paneSettingsContainer.getHeight());
+
+        ApplicationMessages.loggerTextFlow.setPrefWidth(paneSettingsContainer.getWidth()-55);
+        toolBar.setPrefHeight(stage.getHeight() - paneSettingsContainer.getHeight());
 
         scrollPaneFactories.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         vBoxFactoriesList.setFillWidth(true);
@@ -142,10 +133,9 @@ public class PoseidonApplication extends javafx.application.Application {
         scrollPaneFactories.setContent(vBoxFactoriesList);
 
         runFactoriesButton.setOnAction(e -> {
-                    PoseidonApplication.paneLogger.clearLogger();
+                    PoseidonApplication.applicationMessages.clearLogger();
                     if (vBoxFactoriesList.getChildren().size() == 0) {
-                        paneMessages.getSelectionModel().select(PoseidonApplication.applicationMessagesTab);
-                        applicationMessagesTextArea.setText("nothing to run, click on add in the application menu to add a factory");
+                        applicationMessages.writeInLogger("nothing to run, click on add in the application menu to add a factory");
                     }
                     else {
                         List<Node> factories = vBoxFactoriesList.getChildren().stream().toList();
@@ -154,28 +144,31 @@ public class PoseidonApplication extends javafx.application.Application {
                             String factoryID = factory.getId().split("-")[0];
                             String factoryType = factory.getId().split("-")[1];
 
-                            switch (factoryType) {
-                                case "REQUEST":
-                                    for (RequestSettings requestSettings : requestSettingsList) {
-                                        if (requestSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
-                                            RequestBuilder requestBuilder = new RequestBuilder(requestSettings.getFactoryProperties());
-                                        }
+                            if (factoryType.equals("REQUEST")) {
+                                for (RequestSettings requestSettings : requestSettingsList) {
+                                    if (requestSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
+                                        RequestBuilder requestBuilder = new RequestBuilder(requestSettings.getFactoryProperties());
                                     }
-                                case "READ":
-                                    for (ReaderSettings readerSettings : readerSettingsList) {
-                                        if (readerSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
-                                            ReadBuilder readBuilder = new ReadBuilder(readerSettings.getFactoryProperties());
-                                        }
-                                    }
-                                case "WRITE":
-                                    for (WriterSettings writerSettings : writerSettingsList) {
-                                        if (writerSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
-                                            WriteBuilder writeBuilder = new WriteBuilder(writerSettings.getFactoryProperties());
-                                        }
-                                    }
-                                case "LOG":
-                                    paneLogger.AppendToLogger(PoseidonApplication.dataFlow);
+                                }
                             }
+
+                            if (factoryType.equals("READ")) {
+                                for (ReaderSettings readerSettings : readerSettingsList) {
+                                    if (readerSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
+                                        ReadBuilder readBuilder = new ReadBuilder(readerSettings.getFactoryProperties());
+                                    }
+                                }
+                            }
+
+                            if (factoryType.equals("WRITE")) {
+                                for (WriterSettings writerSettings : writerSettingsList) {
+                                    if (writerSettings.getId().equals(factoryID + "-" + factoryType + "-SETTINGS")) {
+                                        WriteBuilder writeBuilder = new WriteBuilder(writerSettings.getFactoryProperties());
+                                    }
+                                }
+                            }
+
+                            if (factoryType.equals("LOG")) applicationMessages.appendToLogger(PoseidonApplication.dataFlow);
                         }
                     }
                 });
@@ -206,24 +199,18 @@ public class PoseidonApplication extends javafx.application.Application {
 
         setFactoriesMenuItemEvents();
 
-        messagesHbox.getChildren().add(applicationMessagesTextArea);
-        applicationMessagesPane.getChildren().add(messagesHbox);
-        applicationMessagesTab.setContent(applicationMessagesPane);
-        paneMessages.getTabs().add(applicationMessagesTab);
-        paneMessages.getTabs().add(paneLogger);
-
         rightHorizontalSplitPane.getItems().add(paneSettingsContainer);
-        rightHorizontalSplitPane.getItems().add(paneMessages);
+        rightHorizontalSplitPane.getItems().add(applicationMessages);
 
         globalVerticalSplitPane.getItems().add(vBoxFactories);
         globalVerticalSplitPane.getItems().add(rightHorizontalSplitPane);
 
         menuFichiers.getItems().add(menuItemQuitter);
         menuFishponds.getItems().add(menuItemExploreFishponds);
-        menuAdd.getItems().add(menuItemAddReadFile);
-        menuAdd.getItems().add(menuItemAddWriteFile);
-        menuAdd.getItems().add(menuItemAddLogger);
         menuAdd.getItems().add(menuItemAddRequest);
+        menuAdd.getItems().add(menuItemAddLogger);
+        menuAdd.getItems().add(menuItemAddWriteFile);
+        menuAdd.getItems().add(menuItemAddReadFile);
         menuBar.getMenus().add(menuFichiers);
         menuBar.getMenus().add(menuAdd);
         menuBar.getMenus().add(menuFishponds);
@@ -239,26 +226,22 @@ public class PoseidonApplication extends javafx.application.Application {
 
     public void dynamicallyResizeEverything(Stage stage) {
         stage.widthProperty().addListener((observableValue, oldStageWidth, newStageWidth) -> {
-            messagesHbox.setPrefWidth(paneSettingsContainer.getWidth());
-            LoggerTab.loggerHBOX.setPrefWidth(paneSettingsContainer.getWidth());
+            ApplicationMessages.loggerTextFlow.setPrefWidth(paneSettingsContainer.getWidth()-55);
             vBoxFactoriesList.setPrefWidth((double)newStageWidth-(paneSettingsContainer.getWidth()+30));
         });
 
         stage.heightProperty().addListener((observableValue, oldStageHeight, newStageHeight) -> {
-            messagesHbox.setPrefHeight((double)newStageHeight- ( paneSettingsContainer.getHeight() + 102) );
-            LoggerTab.loggerHBOX.setPrefHeight((double)newStageHeight- ( paneSettingsContainer.getHeight() + 102 ));
+            ApplicationMessages.loggerTextFlow.setPrefHeight((double)newStageHeight- ( paneSettingsContainer.getHeight() + 78 ));
             globalVerticalSplitPane.setPrefHeight((double)newStageHeight);
         });
 
         paneSettingsContainer.widthProperty().addListener((observableValue, oldSettingsContainerWidth, newSettingsContainerWidth) -> {
-            messagesHbox.setPrefWidth((double) newSettingsContainerWidth);
-            LoggerTab.loggerHBOX.setPrefWidth((double)newSettingsContainerWidth);
+            ApplicationMessages.loggerTextFlow.setPrefWidth(paneSettingsContainer.getWidth()-55);
             vBoxFactoriesList.setPrefWidth(stage.getWidth()-((double)newSettingsContainerWidth+30));
         });
 
         paneSettingsContainer.heightProperty().addListener((observableValue, oldSettingsContainerHeight, newSettingsContainerHeight) -> {
-            messagesHbox.setPrefHeight(stage.getHeight()- ( (double)newSettingsContainerHeight + 102) );
-            LoggerTab.loggerHBOX.setPrefHeight(stage.getHeight()- ( (double)newSettingsContainerHeight + 102 ));
+            ApplicationMessages.loggerTextFlow.setPrefHeight(stage.getHeight()- ( (double)newSettingsContainerHeight+78 ));
         });
     }
 
@@ -305,7 +288,6 @@ public class PoseidonApplication extends javafx.application.Application {
             readerFactorySettings.setId(factoryID+"-READ-SETTINGS");
 
             readerSettingsList.add(readerFactorySettings);
-
             vBoxFactoriesList.getChildren().add(readerFactory);
             paneSettingsContainer.getChildren().add(readerFactorySettings);
 
@@ -315,13 +297,13 @@ public class PoseidonApplication extends javafx.application.Application {
 
         menuItemAddWriteFile.setOnAction(e -> {
             String factoryID = UUID.randomUUID().toString().substring(0, 6);
-
             FactoryBox writerFactory = new FactoryBox(FactoryType.WRITE);
             writerFactory.setId(factoryID+"-WRITE");
 
             WriterSettings writerFactorySettings = new WriterSettings();
             writerFactorySettings.setId(factoryID+"-WRITE-SETTINGS");
 
+            writerSettingsList.add(writerFactorySettings);
             vBoxFactoriesList.getChildren().add(writerFactory);
             paneSettingsContainer.getChildren().add(writerFactorySettings);
 

@@ -15,8 +15,9 @@ public class RequestBuilder {
         String requestContentType = requestParameters[3];
 
         StringBuilder response = new StringBuilder();
+
         try {
-            URL myRequestUrl = new URL(requestUrl);
+            URL myRequestUrl = new URL(requestProtocol+requestUrl);
 
             HttpURLConnection connection = (HttpURLConnection) myRequestUrl.openConnection();
 
@@ -25,7 +26,7 @@ public class RequestBuilder {
             connection.addRequestProperty("Accept", requestContentType);
             connection.setDoOutput(true);
             int codeResponse = connection.getResponseCode();
-            System.out.println("code response : " + codeResponse);
+            PoseidonApplication.applicationMessages.appendSuccessToLogger("REQUEST","code response : " + codeResponse);
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
 
@@ -36,10 +37,8 @@ public class RequestBuilder {
             }
         }
         catch (IOException ioException) {
-            ioException.printStackTrace();
-            PoseidonApplication.applicationMessagesTextArea.setText(ioException.toString());
+            PoseidonApplication.applicationMessages.appendWarningToLogger("REQUEST", ioException.toString());
         }
         PoseidonApplication.dataFlow = response.toString();
-        PoseidonApplication.paneLogger.writeInLogger(PoseidonApplication.dataFlow);
     }
 }

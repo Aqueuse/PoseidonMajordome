@@ -11,13 +11,15 @@ public class WriteBuilder {
         String path = factoryParameters[0];
         String filename = factoryParameters[1];
         FileWriter textFile;
+
         try {
             textFile = new FileWriter(path+"/"+filename, StandardCharsets.UTF_8, false);
             textFile.append(PoseidonApplication.dataFlow);
             textFile.close();
+            PoseidonApplication.applicationMessages.appendSuccessToLogger("WRITE", "File writed");
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (IOException ioException) {
+            PoseidonApplication.applicationMessages.appendWarningToLogger("WRITE", ioException.getMessage());
         }
     }
 }

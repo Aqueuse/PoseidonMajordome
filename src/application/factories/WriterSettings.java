@@ -39,7 +39,6 @@ public class WriterSettings extends Pane {
 
         saveFileButton.setOnAction(e -> {
             WriteBuilder writeBuilder = new WriteBuilder(new String[]{filePathTextField.getText(), filenameTextField.getText()});
-            PoseidonApplication.paneLogger.AppendToLogger(PoseidonApplication.dataFlow);
         });
 
         directoryHbox.setAlignment(Pos.CENTER_LEFT);

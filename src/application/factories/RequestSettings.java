@@ -1,5 +1,6 @@
 package application.factories;
 
+import application.PoseidonApplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -18,7 +19,7 @@ public class RequestSettings extends Pane {
 
     public RequestSettings() {
         BorderPane borderPane = new BorderPane();
-        Button buttonExecuteRequest = new Button("exécuter");
+        Button buttonExecuteRequest = new Button("send");
 
         ObservableList<requestMethod> requestTypes = FXCollections.observableArrayList(requestMethod.values());
 
@@ -33,10 +34,12 @@ public class RequestSettings extends Pane {
             if (isValidUrl) {
                 textFieldRequestUrl.setStyle("");
                 RequestBuilder requestBuild = new RequestBuilder(new String[]{
+                        choiceDialogProtocol.getValue(),
+                        textFieldRequestUrl.getText(),
                         choiceDialogRequestMethod.getValue().toString(),
-                        choiceDialogProtocol.getValue() + textFieldRequestUrl.getText(),
-                        "application/json"}
-                );
+                        "application/json"
+                });
+                PoseidonApplication.applicationMessages.appendToLogger(PoseidonApplication.dataFlow);
             }
             else {
                 textFieldRequestUrl.setStyle("-fx-control-inner-background: #FFAEAE; -fx-text-box-border: #B22222; -fx-focus-color: #B22222;");

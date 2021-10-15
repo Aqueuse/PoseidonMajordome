@@ -30,13 +30,16 @@ public class ReaderSettings extends Pane {
         });
 
         readFileContentButton.setOnAction(e -> {
-            if (filePathTextField.getText() != null) {
+            if (!filePathTextField.getText().equals("")) {
                 String path = filePathTextField.getText();
                 File textFile = new File(path);
                 if (textFile.exists()) {
                     ReadBuilder readBuilder = new ReadBuilder(new String[]{path});
-                    PoseidonApplication.paneLogger.AppendToLogger(PoseidonApplication.dataFlow);
+                    PoseidonApplication.applicationMessages.appendSuccessToLogger("READ", "file writed");
                 }
+            }
+            else {
+                PoseidonApplication.applicationMessages.appendWarningToLogger("READ","file not defined");
             }
         });
 
