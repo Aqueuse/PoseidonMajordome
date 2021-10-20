@@ -5,6 +5,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -39,6 +40,7 @@ public class ApplicationMessages extends Pane {
         textFlowScrollPane.vvalueProperty().bind(loggerTextFlow.heightProperty());
 
         cleanLogButton.setOnAction(e -> clearLogger());
+        cleanLogButton.setTooltip(new Tooltip("clean the logger"));
 
         verticalLoggerToolbar.getItems().add(cleanLogButton);
 
@@ -56,6 +58,10 @@ public class ApplicationMessages extends Pane {
     }
 
     public void appendToLogger(String message) {
+        Text logMessageText = new Text(loggerMessage+"[LOG]\n");
+        logMessageText.setFill(Color.GREEN);
+        loggerTextFlow.getChildren().add(logMessageText);
+
         Text loggerMessageText = new Text(loggerMessage+message+"\n");
         loggerTextFlow.getChildren().add(loggerMessageText);
     }

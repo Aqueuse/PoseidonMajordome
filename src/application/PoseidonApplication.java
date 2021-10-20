@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import application.composants.FishPondsWindow;
+import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -21,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import application.composants.FishPondsWindow;
 import application.composants.ApplicationMessages;
 import application.builders.ReadBuilder;
 import application.builders.RequestBuilder;
@@ -41,7 +41,6 @@ public class PoseidonApplication extends javafx.application.Application {
     MenuItem menuItemExploreFishponds = new MenuItem("explore");
 
     public static ApplicationMessages applicationMessages = new ApplicationMessages();
-
 
     public static List<RequestSettings> requestSettingsList = new ArrayList<>();
     public static List<ReaderSettings> readerSettingsList = new ArrayList<>();
@@ -80,17 +79,8 @@ public class PoseidonApplication extends javafx.application.Application {
     public void start(Stage stage) {
         double initialStage = stage.getHeight();
 
-        Image upButtonImage = new Image(String.valueOf(PoseidonApplication.class.getResource("icons/up.png")));
-        ImageView upView = new ImageView(upButtonImage);
-
-        Image downButtonImage = new Image(String.valueOf(PoseidonApplication.class.getResource("icons/down.png")));
-        ImageView downView = new ImageView(downButtonImage);
-
-        Image playButtonImage = new Image(String.valueOf(PoseidonApplication.class.getResource("icons/play.png")));
-        ImageView playView = new ImageView(playButtonImage);
-
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         VBox vBoxGlobal = new VBox();
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Scene scene = new Scene(vBoxGlobal,screenBounds.getWidth()/1.5, screenBounds.getHeight()/1.5, Color.BLUE);
 
         Menu menuFichiers = new Menu("Fichiers");
@@ -101,38 +91,46 @@ public class PoseidonApplication extends javafx.application.Application {
 
         ScrollPane scrollPaneFactories = new ScrollPane();
 
-        BorderPane toolBar = new BorderPane();
-        Button runFactoriesButton = new Button("Run");
+        BorderPane factoriesToolBar = new BorderPane();
+        Button runAllFactoriesButton = new Button("Run All");
         Button upFactoryButton = new Button();
         Button downFactoryButton = new Button();
+        Button indentFactoryButton = new Button();
+        Button unindentFactoryButton = new Button();
 
         SplitPane rightHorizontalSplitPane = new SplitPane();
 
-        stage.setTitle("Poseidon Majordome");
-
         globalVerticalSplitPane.setPrefHeight(initialStage);
         hboxToolbar.setAlignment(Pos.CENTER_RIGHT);
-        upFactoryButton.setGraphic(upView);
-        downFactoryButton.setGraphic(downView);
-        runFactoriesButton.setGraphic(playView);
+
+        factoriesToolBar.setPrefHeight(stage.getHeight() - paneSettingsContainer.getHeight());
+        upFactoryButton.setGraphic(Ressources.upView);
+        downFactoryButton.setGraphic(Ressources.downView);
+        runAllFactoriesButton.setGraphic(Ressources.playView);
+        indentFactoryButton.setGraphic(Ressources.indentView);
+        unindentFactoryButton.setGraphic(Ressources.unindentView);
+
+        runAllFactoriesButton.setTooltip(new Tooltip("run all the factories"));
+        upFactoryButton.setTooltip(new Tooltip("move up the selected factory"));
+        downFactoryButton.setTooltip(new Tooltip("move down the selected factory"));
+        indentFactoryButton.setTooltip(new Tooltip("add the selected factory to the dataFlow subloop"));
+        unindentFactoryButton.setTooltip(new Tooltip("remove the selected factory from the dataFlow subloop"));
+
         rightHorizontalSplitPane.setOrientation(Orientation.VERTICAL);
-
         ApplicationMessages.loggerTextFlow.setPrefWidth(paneSettingsContainer.getWidth()-55);
-        toolBar.setPrefHeight(stage.getHeight() - paneSettingsContainer.getHeight());
-
         scrollPaneFactories.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         vBoxFactoriesList.setFillWidth(true);
         vBoxFactoriesList.setSpacing(0);
 
-        hboxToolbar.getChildren().addAll(upFactoryButton, downFactoryButton);
-        toolBar.setLeft(runFactoriesButton);
-        toolBar.setRight(hboxToolbar);
+        hboxToolbar.getChildren().addAll(unindentFactoryButton, indentFactoryButton, upFactoryButton, downFactoryButton);
+        factoriesToolBar.setLeft(runAllFactoriesButton);
+        factoriesToolBar.setRight(hboxToolbar);
 
-        vBoxFactories.getChildren().add(toolBar);
+        vBoxFactories.getChildren().add(factoriesToolBar);
         vBoxFactories.getChildren().add(scrollPaneFactories);
         scrollPaneFactories.setContent(vBoxFactoriesList);
 
-        runFactoriesButton.setOnAction(e -> {
+        runAllFactoriesButton.setOnAction(e -> {
                     PoseidonApplication.applicationMessages.clearLogger();
                     if (vBoxFactoriesList.getChildren().size() == 0) {
                         applicationMessages.writeInLogger("nothing to run, click on add in the application menu to add a factory");
@@ -141,35 +139,17 @@ public class PoseidonApplication extends javafx.application.Application {
                         List<Node> factories = vBoxFactoriesList.getChildren().stream().toList();
 
                         for (Node factory : factories) {
-                            String factoryID = factory.getId().split("-")[0];
-                            String factoryType = factory.getId().split("-")[1];
-
-                            if (factoryType.equals("REQUEST")) {
-                                for (RequestSettings requestSettings : requestSettingsList) {
-                                    if (requestSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
-                                        RequestBuilder requestBuilder = new RequestBuilder(requestSettings.getFactoryProperties());
+                            if (isDataFlowArray()) {
+                                for (String dataFlowElement : dataFlow.substring(11).split(",")) {
+                                    if (isMidSized(factory.getId())) {
+                                        runFactory(factory, dataFlowElement.trim());
                                     }
                                 }
                             }
-
-                            if (factoryType.equals("READ")) {
-                                for (ReaderSettings readerSettings : readerSettingsList) {
-                                    if (readerSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
-                                        ReadBuilder readBuilder = new ReadBuilder(readerSettings.getFactoryProperties());
-                                    }
-                                }
+                            else {
+                                runFactory(factory, "");
                             }
-
-                            if (factoryType.equals("WRITE")) {
-                                for (WriterSettings writerSettings : writerSettingsList) {
-                                    if (writerSettings.getId().equals(factoryID + "-" + factoryType + "-SETTINGS")) {
-                                        WriteBuilder writeBuilder = new WriteBuilder(writerSettings.getFactoryProperties());
-                                    }
-                                }
-                            }
-
-                            if (factoryType.equals("LOG")) applicationMessages.appendToLogger(PoseidonApplication.dataFlow);
-                        }
+                       }
                     }
                 });
 
@@ -197,7 +177,24 @@ public class PoseidonApplication extends javafx.application.Application {
             }
         });
 
+        indentFactoryButton.setOnAction(e -> {
+            if (!selectedFactoryID.equals("")) {
+                Node factory = vBoxFactoriesList.lookup("#" + selectedFactoryID);
+                int midSize = (int) PoseidonApplication.vBoxFactoriesList.getPrefWidth()/3;
+                factory.setStyle("-fx-background-insets:0 0 0 "+midSize+"; -fx-background-color:#84B3F9; -fx-border-color:#F4F4F4 #F4F4F4 #78B7CF #78B7CF;");
+            }
+        });
+
+        unindentFactoryButton.setOnAction(e -> {
+            if (!selectedFactoryID.equals("")) {
+                Node factory = vBoxFactoriesList.lookup("#" + selectedFactoryID);
+                factory.setStyle("-fx-background-insets:0 0 0 0; -fx-background-color:#84B3F9; -fx-border-color:#F4F4F4 #F4F4F4 #78B7CF #78B7CF;");
+            }
+        });
+
         setFactoriesMenuItemEvents();
+
+        menuItemQuitter.setOnAction(e -> Platform.exit());
 
         rightHorizontalSplitPane.getItems().add(paneSettingsContainer);
         rightHorizontalSplitPane.getItems().add(applicationMessages);
@@ -220,8 +217,60 @@ public class PoseidonApplication extends javafx.application.Application {
 
         dynamicallyResizeEverything(stage);
 
+        stage.setTitle("Poseidon Majordome");
+        stage.getIcons().add(new Image(String.valueOf(PoseidonApplication.class.getResource("mascott.png"))));
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void runFactory(Node factory, String dataFlowElement) {
+        String factoryID = factory.getId().split("-")[0];
+        String factoryType = factory.getId().split("-")[1];
+
+        if (factoryType.equals("REQUEST")) {
+            for (RequestSettings requestSettings : requestSettingsList) {
+                if (requestSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
+                    RequestBuilder requestBuilder = new RequestBuilder(requestSettings.getFactoryProperties(dataFlowElement));
+                }
+            }
+        }
+
+        if (factoryType.equals("READ")) {
+            for (ReaderSettings readerSettings : readerSettingsList) {
+                if (readerSettings.getId().equals(factoryID+"-"+factoryType+"-SETTINGS")) {
+                    ReadBuilder readBuilder = new ReadBuilder(readerSettings.getFactoryProperties(dataFlowElement));
+                }
+            }
+        }
+
+        if (factoryType.equals("WRITE")) {
+            for (WriterSettings writerSettings : writerSettingsList) {
+                if (writerSettings.getId().equals(factoryID + "-" + factoryType + "-SETTINGS")) {
+                    WriteBuilder writeBuilder = new WriteBuilder(writerSettings.getFactoryProperties(dataFlowElement));
+                }
+            }
+        }
+
+        if (factoryType.equals("LOG")) {
+            if (!dataFlowElement.equals("")) {
+                applicationMessages.appendToLogger(dataFlowElement);
+            }
+            else {
+                applicationMessages.appendToLogger(dataFlow);
+            }
+        }
+    }
+
+    private boolean isDataFlowArray() {
+        if (dataFlow != null) {
+            return dataFlow.startsWith("$dataFlow =") && dataFlow.contains(",");
+        }
+        return false;
+    }
+
+    public static boolean isMidSized(String factoryID) {
+        String midSizedProperty = PoseidonApplication.vBoxFactoriesList.lookup("#"+factoryID).getStyle().split(";")[0];
+        return !midSizedProperty.equals("-fx-background-insets:0 0 0 0");
     }
 
     public void dynamicallyResizeEverything(Stage stage) {
@@ -240,9 +289,8 @@ public class PoseidonApplication extends javafx.application.Application {
             vBoxFactoriesList.setPrefWidth(stage.getWidth()-((double)newSettingsContainerWidth+30));
         });
 
-        paneSettingsContainer.heightProperty().addListener((observableValue, oldSettingsContainerHeight, newSettingsContainerHeight) -> {
-            ApplicationMessages.loggerTextFlow.setPrefHeight(stage.getHeight()- ( (double)newSettingsContainerHeight+78 ));
-        });
+        paneSettingsContainer.heightProperty().addListener((observableValue, oldSettingsContainerHeight, newSettingsContainerHeight) ->
+            ApplicationMessages.loggerTextFlow.setPrefHeight(stage.getHeight() - ( (double)newSettingsContainerHeight+78 )));
     }
 
     public void setFactoriesMenuItemEvents() {
@@ -264,7 +312,6 @@ public class PoseidonApplication extends javafx.application.Application {
 
         menuItemAddLogger.setOnAction(e -> {
             String factoryID = UUID.randomUUID().toString().substring(0, 6);
-
             FactoryBox loggerFactory = new FactoryBox(FactoryType.LOG);
             loggerFactory.setId(factoryID+"-LOG");
 
@@ -327,6 +374,9 @@ public class PoseidonApplication extends javafx.application.Application {
                 PoseidonApplication.paneSettingsContainer.lookup("#"+factoryBox.getId()+"-SETTINGS")
         );
         PoseidonApplication.vBoxFactoriesList.getChildren().remove(factoryBox);
+        if (selectedFactoryID.equals(factoryBox.getId())) { // factory removed, so not selected of course
+            selectedFactoryID = "";
+        }
     }
 
     public static void main(String[] args) {

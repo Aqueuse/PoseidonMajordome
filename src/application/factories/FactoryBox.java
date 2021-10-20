@@ -34,8 +34,9 @@ public class FactoryBox extends BorderPane {
 
         this.setCenter(labelFactoryType);
         this.setRight(deleteButton);
+        this.setStyle("-fx-background-insets:0 0 0 0; -fx-background-color:#B7D3FB; -fx-border-color:#78B7CF #78B7CF #F4F4F4 #F4F4F4;");
 
-        this.setOnMouseClicked(e -> {
+        this.setOnMousePressed(e -> {
             showFactorySettings(this.getId()+"-SETTINGS");
             colorSelectedFactory(this.getId());
         });
@@ -50,18 +51,30 @@ public class FactoryBox extends BorderPane {
             }
         }
 
-        PoseidonApplication.paneSettingsContainer.lookup("#"+factoryID).setVisible(true);
+        PoseidonApplication.paneSettingsContainer.lookup("#" + factoryID).setVisible(true);
     }
 
     public void colorSelectedFactory(String factoryID) {
         PoseidonApplication.selectedFactoryID = factoryID;
         List<Node> factories = PoseidonApplication.vBoxFactoriesList.getChildren().stream().toList();
+        int midSize = (int) PoseidonApplication.vBoxFactoriesList.getPrefWidth()/3;
 
         for (Node factory : factories) {
-            if (!factory.getId().equals("#" + factoryID)) {
-                factory.setStyle("-fx-background-color:#B7D3FB; -fx-border-color:#78B7CF #78B7CF #F4F4F4 #F4F4F4;");
+           if (!factory.getId().equals("#" + factoryID)) {
+               if (PoseidonApplication.isMidSized(factory.getId())) {
+                   factory.setStyle("-fx-background-insets:0 0 0 "+midSize+"; -fx-background-color:#B7D3FB; -fx-border-color:#78B7CF #78B7CF #F4F4F4 #F4F4F4;");
+               }
+               else {
+                   factory.setStyle("-fx-background-insets:0 0 0 0; -fx-background-color:#B7D3FB; -fx-border-color:#78B7CF #78B7CF #F4F4F4 #F4F4F4;");
+               }
             }
         }
-        PoseidonApplication.vBoxFactoriesList.lookup("#"+factoryID).setStyle("-fx-background-color:#84B3F9; -fx-border-color:#F4F4F4 #F4F4F4 #78B7CF #78B7CF;");
+
+        if (PoseidonApplication.isMidSized(factoryID)) {
+            PoseidonApplication.vBoxFactoriesList.lookup("#" + factoryID).setStyle("-fx-background-insets:0 0 0 "+midSize+"; -fx-background-color:#84B3F9; -fx-border-color:#F4F4F4 #F4F4F4 #78B7CF #78B7CF;");
+        }
+        else {
+            PoseidonApplication.vBoxFactoriesList.lookup("#" + factoryID).setStyle("-fx-background-insets:0 0 0 0; -fx-background-color:#84B3F9; -fx-border-color:#F4F4F4 #F4F4F4 #78B7CF #78B7CF;");
+        }
     }
 }

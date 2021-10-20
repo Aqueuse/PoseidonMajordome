@@ -10,11 +10,12 @@ public class WriteBuilder {
     public WriteBuilder(String[] factoryParameters) {
         String path = factoryParameters[0];
         String filename = factoryParameters[1];
+        String textToWrite = factoryParameters[2];
         FileWriter textFile;
 
         try {
-            textFile = new FileWriter(path+"/"+filename, StandardCharsets.UTF_8, false);
-            textFile.append(PoseidonApplication.dataFlow);
+            textFile = new FileWriter(path+"/"+filename, StandardCharsets.UTF_8, true);
+            textFile.append(textToWrite);
             textFile.close();
             PoseidonApplication.applicationMessages.appendSuccessToLogger("WRITE", "File writed");
         }
