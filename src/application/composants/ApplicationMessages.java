@@ -20,7 +20,7 @@ public class ApplicationMessages extends Pane {
     String loggerMessage = "";
     public static TextFlow loggerTextFlow = new TextFlow();
 
-    Image cleanButtonImage = new Image(String.valueOf(PoseidonApplication.class.getResource("icons/clean.png")));
+    Image cleanButtonImage = new Image(String.valueOf(PoseidonApplication.class.getResource("ressources/icons/clean.png")));
     ImageView cleanView = new ImageView(cleanButtonImage);
 
     ToolBar verticalLoggerToolbar = new ToolBar();

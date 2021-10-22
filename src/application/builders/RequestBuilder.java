@@ -5,7 +5,11 @@ import application.PoseidonApplication;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 
 public class RequestBuilder {
     public RequestBuilder(String[] requestParameters) {
@@ -14,6 +18,8 @@ public class RequestBuilder {
         String requestBody =requestParameters[2];
         String requestMethod = requestParameters[3];
         String requestContentType = requestParameters[4];
+        String filedirectory = requestParameters[5];
+        String filename = requestParameters[6];
 
         StringBuilder response = new StringBuilder();
 
@@ -28,25 +34,23 @@ public class RequestBuilder {
 
             if (requestMethod.equals("POST")) {
                 connection.setDoOutput(true);
-                try(OutputStream os = connection.getOutputStream()) {
+                try(OutputStream outputStream = connection.getOutputStream()) {
                     byte[] input = requestBody.getBytes(StandardCharsets.UTF_8);
-                    os.write(input, 0, input.length);
+                    outputStream.write(input, 0, input.length);
                 }
             }
 
             int codeResponse = connection.getResponseCode();
             PoseidonApplication.applicationMessages.appendSuccessToLogger("REQUEST","code response : " + codeResponse);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-            String responseLine;
+            ReadableByteChannel readableByteChannel = Channels.newChannel(myRequestUrl.openStream());
 
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
+            FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(filedirectory, filename).toFile());
+            FileChannel fileChannel = fileOutputStream.getChannel();
+            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
         }
         catch (IOException ioException) {
             PoseidonApplication.applicationMessages.appendWarningToLogger("REQUEST", ioException.toString());
         }
-        PoseidonApplication.dataFlow = response.toString();
     }
 }
