@@ -7,17 +7,16 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
 import application.PoseidonApplication;
 import application.builders.RequestBuilder;
 
+@SuppressWarnings("InstantiationOfUtilityClass")
 public class RequestSettings extends Pane {
     enum requestMethod { GET, POST }
     ChoiceBox<String> choiceDialogProtocol = new ChoiceBox<>(FXCollections.observableArrayList("http://", "https://"));
@@ -26,8 +25,7 @@ public class RequestSettings extends Pane {
     ChoiceBox<requestMethod> choiceDialogRequestMethod = new ChoiceBox<>();
     ObservableList<requestMethod> requestTypes = FXCollections.observableArrayList(requestMethod.values());
 
-    TextField filePathTextField = new TextField();
-    TextField filenameTextField = new TextField();
+    TextField textFieldResponsePath = new TextField();
 
     public RequestSettings(PoseidonApplication.FactoryType factoryType) {
         this.setId(factoryType.name()+"-SETTINGS");
@@ -40,13 +38,13 @@ public class RequestSettings extends Pane {
         VBox fileVBOX = new VBox();
         HBox directoryHBOX = new HBox();
 
-        VBox bottomVBOX = new VBox();
-        HBox bottomhBOX = new HBox();
-
         Label headLabel = new Label("BODY ");
         Button testButton = new Button("test");
 
-        Button selectDirectoryButton = new Button("select directory ...");
+        VBox bottomVBOX = new VBox();
+        HBox bottomHBOX = new HBox();
+
+        textFieldResponsePath.setPromptText("response filepath");
 
         choiceDialogProtocol.setValue("http://");
         textFieldRequestUrl.setPromptText("domaine.org");
@@ -62,19 +60,31 @@ public class RequestSettings extends Pane {
             }
         });
 
-        filePathTextField.setPromptText("directory");
-        filenameTextField.setPromptText("filename");
-
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select Directory");
-
-        selectDirectoryButton.setOnAction(e -> {
-            File selectedDirectory = directoryChooser.showDialog(null);
-            if (selectedDirectory != null) filePathTextField.setText(selectedDirectory.getAbsolutePath());
+        Button saveAsButton = new Button("save response as ...");
+        saveAsButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            File fileToSave = fileChooser.showSaveDialog(null);
+            if (fileToSave != null) {
+                textFieldResponsePath.setText(fileToSave.getAbsoluteFile().getAbsolutePath());
+                textFieldResponsePath.setStyle("");
+            }
         });
 
         testButton.setOnMouseClicked(e -> {
             boolean isValidUrl = validateUrl(textFieldRequestUrl.getText());
+
+            if (textFieldResponsePath.getText().equals("")) {
+                textFieldResponsePath.setStyle("-fx-control-inner-background: #FFAEAE; -fx-text-box-border: #B22222; -fx-focus-color: #B22222;");
+                FileChooser fileChooser = new FileChooser();
+                File fileToSave = fileChooser.showSaveDialog(null);
+                if (fileToSave != null) {
+                    textFieldResponsePath.setText(fileToSave.getAbsoluteFile().getAbsolutePath());
+                }
+            }
+
+            if (!textFieldResponsePath.getText().equals("")) {
+                textFieldResponsePath.setStyle("");
+            }
 
             if (isValidUrl) {
                 textFieldRequestUrl.setStyle("");
@@ -84,11 +94,10 @@ public class RequestSettings extends Pane {
                         textAreaBodyRequest.getText(),
                         choiceDialogRequestMethod.getValue().toString(),
                         "application/json",
-                        filePathTextField.getText(),
-                        filenameTextField.getText()
+                        textFieldResponsePath.getText()
                 });
             }
-            else {
+            if (!isValidUrl) {
                 textFieldRequestUrl.setStyle("-fx-control-inner-background: #FFAEAE; -fx-text-box-border: #B22222; -fx-focus-color: #B22222;");
             }
         });
@@ -96,10 +105,9 @@ public class RequestSettings extends Pane {
 
         PoseidonApplication.paneSettingsContainer.widthProperty().addListener((observableValue, oldSettingsContainerWidth, newSettingsContainerWidth) -> {
             borderPane.setPrefWidth((double)newSettingsContainerWidth);
-            textAreaBodyRequest.setPrefWidth((double)newSettingsContainerWidth-100);
+            textAreaBodyRequest.setPrefWidth((double)newSettingsContainerWidth-50);
             textFieldRequestUrl.setPrefWidth((double)newSettingsContainerWidth-100);
-            filePathTextField.setPrefWidth((double)newSettingsContainerWidth-100);
-            filenameTextField.setPrefWidth((double)newSettingsContainerWidth-100);
+            textFieldResponsePath.setPrefWidth((double)newSettingsContainerWidth-120);
         });
 
         PoseidonApplication.paneSettingsContainer.heightProperty().addListener((observableValue, oldSettingsContainerHeight, newSettingsContainerHeight) ->
@@ -109,17 +117,15 @@ public class RequestSettings extends Pane {
         centerhBOX.setPadding(new Insets(5, 5, 5, 5));
         centerhBOX.setVisible(false);
         centerhBOX.setAlignment(Pos.TOP_LEFT);
-        bottomhBOX.setAlignment(Pos.CENTER_RIGHT);
+        bottomHBOX.setAlignment(Pos.CENTER_RIGHT);
         headLabel.setAlignment(Pos.CENTER_LEFT);
 
         tophBOX.getChildren().addAll(choiceDialogRequestMethod, choiceDialogProtocol, textFieldRequestUrl);
         centerhBOX.getChildren().addAll(headLabel, textAreaBodyRequest);
 
-        directoryHBOX.getChildren().addAll(filePathTextField, selectDirectoryButton);
-        fileVBOX.getChildren().addAll(new Label("Save response as ..."), directoryHBOX, filenameTextField);
-
-        bottomhBOX.getChildren().add(testButton);
-        bottomVBOX.getChildren().addAll(fileVBOX, bottomhBOX);
+        directoryHBOX.getChildren().addAll(saveAsButton, textFieldResponsePath);
+        bottomHBOX.getChildren().add(testButton);
+        bottomVBOX.getChildren().addAll(directoryHBOX, bottomHBOX);
 
         borderPane.setTop(tophBOX);
         borderPane.setCenter(centerhBOX);
@@ -139,8 +145,7 @@ public class RequestSettings extends Pane {
         choiceDialogProtocol.setValue("http://");
         textFieldRequestUrl.setText("");
         textAreaBodyRequest.setText("");
-        filePathTextField.setText("");
-        filenameTextField.setText("");
+        textFieldResponsePath.setText("");
     }
 
     public String[] getFactoryProperties () {
@@ -150,8 +155,7 @@ public class RequestSettings extends Pane {
                 textAreaBodyRequest.getText(),
                 String.valueOf(choiceDialogRequestMethod.getValue()),
                 "application/json",
-                filePathTextField.getText(),
-                filenameTextField.getText()
+                textFieldResponsePath.getText()
         };
     }
 }

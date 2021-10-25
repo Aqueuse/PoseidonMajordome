@@ -1,7 +1,5 @@
 package application.builders;
 
-import application.PoseidonApplication;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -11,6 +9,8 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
+import application.PoseidonApplication;
+
 public class RequestBuilder {
     public RequestBuilder(String[] requestParameters) {
         String requestProtocol = requestParameters[0];
@@ -18,8 +18,7 @@ public class RequestBuilder {
         String requestBody =requestParameters[2];
         String requestMethod = requestParameters[3];
         String requestContentType = requestParameters[4];
-        String filedirectory = requestParameters[5];
-        String filename = requestParameters[6];
+        String filePath = requestParameters[5];
 
         StringBuilder response = new StringBuilder();
 
@@ -45,12 +44,24 @@ public class RequestBuilder {
 
             ReadableByteChannel readableByteChannel = Channels.newChannel(myRequestUrl.openStream());
 
-            FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(filedirectory, filename).toFile());
-            FileChannel fileChannel = fileOutputStream.getChannel();
-            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+            if (!isValidFilepath(filePath)) {
+                PoseidonApplication.applicationMessages.appendWarningToLogger("REQUEST", "filepath is invalid, correct it to save the response");
+            }
+
+            else {
+                FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(filePath).toFile());
+                FileChannel fileChannel = fileOutputStream.getChannel();
+                fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                PoseidonApplication.applicationMessages.appendSuccessToLogger("REQUEST", "response saved as " + filePath);
+            }
         }
         catch (IOException ioException) {
             PoseidonApplication.applicationMessages.appendWarningToLogger("REQUEST", ioException.toString());
         }
+    }
+
+    public static boolean isValidFilepath(String filename) {
+        Paths.get(filename);
+        return true;
     }
 }
